@@ -1,0 +1,65 @@
+<h2 mat-dialog-title class="dialog-title">
+  <mat-icon class="title-icon">workspace_premium</mat-icon>
+  Actualizar a TaskHive Enterprise MAX+
+</h2>
+<mat-dialog-content class="dialog-content">
+  <p class="subtitle">Se detectó que tu sesión puede acceder a una experiencia mucho más poderosa.</p>
+
+  <div class="plans-container">
+    <!-- Plan 1 -->
+    <mat-card class="plan-card" [class.selected]="selectedPlan() === 1" (click)="selectPlan(1)">
+      <mat-card-header class="plan-header">
+        <mat-card-title>TaskHive PRO</mat-card-title>
+        <mat-card-subtitle class="price">$19.99 USD/mes</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="plan-features">
+        <p><mat-icon>check_circle</mat-icon> Compilación más rápida*</p>
+        <p><mat-icon>check_circle</mat-icon> Componentes exclusivos*</p>
+        <p><mat-icon>check_circle</mat-icon> IA básica*</p>
+        <p><mat-icon>check_circle</mat-icon> Soporte estándar*</p>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Plan 2 -->
+    <mat-card class="plan-card" [class.selected]="selectedPlan() === 2" (click)="selectPlan(2)">
+      <mat-card-header class="plan-header">
+        <mat-card-title>TaskHive MAX</mat-card-title>
+        <mat-card-subtitle class="price">$99.99 USD/mes</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="plan-features">
+        <p><mat-icon>check_circle</mat-icon> Todo lo anterior</p>
+        <p><mat-icon>check_circle</mat-icon> IA que corrige bugs*</p>
+        <p><mat-icon>check_circle</mat-icon> StackOverflow Premium*</p>
+        <p><mat-icon>check_circle</mat-icon> Sin errores en consola*</p>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Plan 3 -->
+    <mat-card class="plan-card recommended" [class.selected]="selectedPlan() === 3" (click)="selectPlan(3)">
+      <div class="badge">⭐ Recomendado</div>
+      <mat-card-header class="plan-header">
+        <mat-card-title>TaskHive ENTERPRISE MAX++</mat-card-title>
+        <mat-card-subtitle class="price">$999.99 USD/mes</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="plan-features">
+        <p><mat-icon>check_circle</mat-icon> Compila sin errores*</p>
+        <p><mat-icon>check_circle</mat-icon> CSS funciona a la primera*</p>
+        <p><mat-icon>check_circle</mat-icon> IA que corrige bugs mientras duermes*</p>
+        <p><mat-icon>check_circle</mat-icon> El cliente deja de pedir cambios*</p>
+        <p><mat-icon>check_circle</mat-icon> El jefe aprueba todos los Pull Requests*</p>
+        <p><mat-icon>check_circle</mat-icon> StackOverflow Premium*</p>
+        <p><mat-icon>check_circle</mat-icon> Cafetera integrada*</p>
+        <p><mat-icon>check_circle</mat-icon> Auto Deploy Cuántico*</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
+  <p class="fine-print">* Algunas funciones probablemente no existen.</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-button color="warn" (click)="onLogout()">Cerrar sesión</button>
+  <span class="spacer"></span>
+  <button mat-stroked-button (click)="onMaybeLater()">Quizá después</button>
+  <button mat-flat-button color="primary" class="upgrade-btn" (click)="onUpdateNow()">Actualizar Ahora</button>
+</mat-dialog-actions>

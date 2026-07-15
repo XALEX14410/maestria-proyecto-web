@@ -1,0 +1,233 @@
+<mat-sidenav-container class="workspace-container">
+  
+  <!-- SIDEBAR -->
+  <mat-sidenav mode="side" opened class="sidebar" [class.collapsed]="!isSidebarExpanded()">
+    <div class="sidebar-header">
+      <mat-icon class="logo-icon">rocket_launch</mat-icon>
+      <span class="logo-text">TaskHive</span>
+    </div>
+
+    <mat-nav-list class="sidebar-nav">
+      <a mat-list-item [class.active]="currentView() === 'inicio'" (click)="changeView('inicio')">
+        <mat-icon matListItemIcon>home</mat-icon>
+        <span matListItemTitle>Inicio</span>
+      </a>
+      <a mat-list-item [class.active]="currentView() === 'espacios'" (click)="changeView('espacios')">
+        <mat-icon matListItemIcon>folder_copy</mat-icon>
+        <span matListItemTitle>Espacios</span>
+      </a>
+      <a mat-list-item [class.active]="currentView() === 'proyectos'" (click)="changeView('proyectos')">
+        <mat-icon matListItemIcon>work</mat-icon>
+        <span matListItemTitle>Proyectos</span>
+      </a>
+      <a mat-list-item [class.active]="currentView() === 'tareas'" (click)="changeView('tareas')">
+        <mat-icon matListItemIcon>task_alt</mat-icon>
+        <span matListItemTitle>Tareas</span>
+      </a>
+      <a mat-list-item [class.active]="currentView() === 'sprints'" (click)="changeView('sprints')">
+        <mat-icon matListItemIcon>directions_run</mat-icon>
+        <span matListItemTitle>Sprints</span>
+      </a>
+      <a mat-list-item [class.active]="currentView() === 'equipo'" (click)="changeView('equipo')">
+        <mat-icon matListItemIcon>group</mat-icon>
+        <span matListItemTitle>Equipo</span>
+      </a>
+      <a mat-list-item [class.active]="currentView() === 'reportes'" (click)="changeView('reportes')">
+        <mat-icon matListItemIcon>bar_chart</mat-icon>
+        <span matListItemTitle>Reportes</span>
+      </a>
+    </mat-nav-list>
+
+    <div class="sidebar-spacer"></div>
+
+    <mat-nav-list class="sidebar-nav-bottom">
+      <a mat-list-item [class.active]="currentView() === 'configuracion'" (click)="changeView('configuracion')">
+        <mat-icon matListItemIcon>settings</mat-icon>
+        <span matListItemTitle>Configuración</span>
+      </a>
+      <a mat-list-item (click)="logout()" class="logout-btn">
+        <mat-icon matListItemIcon color="warn">logout</mat-icon>
+        <span matListItemTitle class="text-danger">Cerrar sesión</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- MAIN CONTENT -->
+  <mat-sidenav-content class="main-content">
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <button mat-icon-button (click)="toggleSidebar()" class="menu-btn text-muted">
+        <mat-icon>{{ isSidebarExpanded() ? 'menu_open' : 'menu' }}</mat-icon>
+      </button>
+
+      <!-- Search -->
+      <div class="search-container">
+        <mat-icon class="search-icon">search</mat-icon>
+        <input type="text" placeholder="Buscar tareas, proyectos o personas..." class="search-input">
+      </div>
+
+      <span class="spacer"></span>
+
+      <!-- Actions -->
+      <button mat-flat-button color="primary" class="new-task-btn">
+        <mat-icon>add</mat-icon> Nueva tarea
+      </button>
+
+      <button mat-icon-button class="notification-btn text-muted" matBadge="3" matBadgeColor="warn" matBadgeSize="small">
+        <mat-icon>notifications_none</mat-icon>
+      </button>
+
+      <div class="avatar-container">
+        <img src="https://ui-avatars.com/api/?name=Alex&background=ebecf0&color=172b4d&rounded=true" alt="Avatar" class="avatar">
+      </div>
+    </header>
+
+    <!-- WORKSPACE AREA -->
+    <div class="workspace-area fade-in">
+      
+      <!-- INICIO VIEW -->
+      <ng-container *ngIf="currentView() === 'inicio'">
+        <!-- TOP WIDGETS -->
+        <div class="widgets-row">
+          <!-- Sprint Progress -->
+          <div class="widget-card">
+            <div class="widget-header">
+              <h3>Sprint 42</h3>
+              <span class="days-left text-muted">Quedan 3 días</span>
+            </div>
+            <mat-progress-bar mode="determinate" value="70" class="custom-progress"></mat-progress-bar>
+            <div class="sprint-stats text-muted">
+              <span>70% completado</span>
+              <span>24 tareas</span>
+            </div>
+          </div>
+
+          <!-- Recent Project -->
+          <div class="widget-card">
+            <div class="widget-header">
+              <h3>Proyecto favorito</h3>
+              <mat-icon class="star-icon">star</mat-icon>
+            </div>
+            <div class="project-details">
+              <div class="project-icon-wrapper">
+                <mat-icon>rocket</mat-icon>
+              </div>
+              <div>
+                <h4>Rediseño Arquitectura Cloud</h4>
+                <p class="text-muted">Actualizado hace 2 horas</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TASK LIST VIEW -->
+        <div class="list-view-container">
+          <div class="list-header">
+            <h2>Mis tareas (Sprint 42)</h2>
+            <div class="list-actions">
+              <button mat-icon-button matTooltip="Filtros" class="text-muted"><mat-icon>filter_list</mat-icon></button>
+              <button mat-icon-button matTooltip="Agrupar" class="text-muted"><mat-icon>view_agenda</mat-icon></button>
+            </div>
+          </div>
+
+          <div class="table-wrapper">
+            <table mat-table [dataSource]="dataSource()" class="task-table">
+              
+              <!-- Status Column -->
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef> Estado </th>
+                <td mat-cell *matCellDef="let task">
+                  <span class="status-chip"
+                        [class.status-backlog]="task.status === 'Backlog'"
+                        [class.status-pending]="task.status === 'Pendiente'"
+                        [class.status-progress]="task.status === 'En progreso'"
+                        [class.status-review]="task.status === 'En revisión'"
+                        [class.status-blocked]="task.status === 'Bloqueada'"
+                        [class.status-done]="task.status === 'Completada'">
+                    <div class="status-dot"></div>
+                    {{task.status}}
+                  </span>
+                </td>
+              </ng-container>
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                <td mat-cell *matCellDef="let task">
+                  <div class="task-name-cell">
+                    <span class="task-id">{{task.id}}</span>
+                    <span class="task-name">{{task.name}}</span>
+                  </div>
+                </td>
+              </ng-container>
+
+              <!-- Assignee Column -->
+              <ng-container matColumnDef="assignee">
+                <th mat-header-cell *matHeaderCellDef> Responsable </th>
+                <td mat-cell *matCellDef="let task">
+                  <div class="assignee-cell">
+                    <img [src]="'https://ui-avatars.com/api/?name=' + task.assignee + '&background=ebecf0&color=172b4d&rounded=true'" class="mini-avatar">
+                    <span class="text-muted">{{task.assignee}}</span>
+                  </div>
+                </td>
+              </ng-container>
+
+              <!-- Priority Column -->
+              <ng-container matColumnDef="priority">
+                <th mat-header-cell *matHeaderCellDef> Prioridad </th>
+                <td mat-cell *matCellDef="let task">
+                  <span class="priority-chip"
+                        [class.priority-urgent]="task.priority === 'Urgente'"
+                        [class.priority-high]="task.priority === 'Alta'"
+                        [class.priority-medium]="task.priority === 'Media'"
+                        [class.priority-low]="task.priority === 'Baja'">
+                    <mat-icon *ngIf="task.priority === 'Urgente'" class="urgent-icon">local_fire_department</mat-icon>
+                    <mat-icon *ngIf="task.priority === 'Alta'" class="priority-icon">keyboard_double_arrow_up</mat-icon>
+                    <mat-icon *ngIf="task.priority === 'Media'" class="priority-icon">keyboard_arrow_up</mat-icon>
+                    <mat-icon *ngIf="task.priority === 'Baja'" class="priority-icon">keyboard_arrow_down</mat-icon>
+                    {{task.priority}}
+                  </span>
+                </td>
+              </ng-container>
+
+              <!-- Sprint Column -->
+              <ng-container matColumnDef="sprint">
+                <th mat-header-cell *matHeaderCellDef> Sprint </th>
+                <td mat-cell *matCellDef="let task" class="text-muted"> {{task.sprint}} </td>
+              </ng-container>
+
+              <!-- Date Column -->
+              <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef> Fecha </th>
+                <td mat-cell *matCellDef="let task" class="text-muted"> {{task.date}} </td>
+              </ng-container>
+
+              <!-- Labels Column -->
+              <ng-container matColumnDef="labels">
+                <th mat-header-cell *matHeaderCellDef> Etiquetas </th>
+                <td mat-cell *matCellDef="let task">
+                  <div class="labels-container">
+                    <span *ngFor="let label of task.labels" class="label-chip">{{label}}</span>
+                  </div>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="task-row"></tr>
+            </table>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- PLACEHOLDER VIEWS -->
+      <ng-container *ngIf="currentView() !== 'inicio'">
+        <div class="placeholder-view">
+          <mat-icon class="placeholder-icon">construction</mat-icon>
+          <h2>Vista de <span style="text-transform: capitalize;">{{currentView()}}</span> en construcción</h2>
+          <p class="text-muted">Esta sección de TaskHive estará disponible próximamente.</p>
+        </div>
+      </ng-container>
+
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

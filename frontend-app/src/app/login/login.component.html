@@ -1,4 +1,7 @@
 <div class="login-container">
+  <button mat-icon-button (click)="themeService.toggleTheme()" class="theme-toggle-btn" matTooltip="Cambiar tema">
+    <mat-icon>{{ themeService.isDarkMode() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+  </button>
   <mat-card class="login-card">
     <mat-card-header class="login-header">
       <div class="logo-container">

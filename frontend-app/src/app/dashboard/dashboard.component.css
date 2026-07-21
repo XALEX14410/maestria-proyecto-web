@@ -1,21 +1,8 @@
 /* VARIABLES Y TIPOGRAFÍA */
+/* Las variables ahora se gestionan globalmente en styles.css para soportar el modo oscuro */
+
 :host {
-  --primary: #5e6ad2; /* Un morado/azul muy SaaS moderno (estilo Linear) */
-  --bg-main: #f7f8fa;
-  --bg-sidebar: #ffffff;
-  --border-color: #e6e8eb;
-  --text-main: #1d1d20;
-  --text-muted: #858699;
-  --hover-bg: #f2f3f5;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-}
-
-.text-muted {
-  color: var(--text-muted) !important;
-}
-
-.text-danger {
-  color: #e24c4c !important;
+  display: block;
 }
 
 /* LAYOUT PRINCIPAL */
@@ -123,6 +110,16 @@
   background-color: var(--hover-bg);
 }
 
+::ng-deep .mdc-list-item__content,
+::ng-deep .mdc-list-item__primary-text,
+::ng-deep .mat-mdc-list-item-title {
+  color: var(--text-main) !important;
+}
+
+::ng-deep .mat-drawer-inner-container {
+  overflow-x: hidden !important;
+}
+
 .sidebar-nav a.active {
   background-color: rgba(94, 106, 210, 0.1);
   color: var(--primary);
@@ -137,7 +134,7 @@
 }
 
 .logout-btn:hover {
-  background-color: #fff0f0 !important;
+  background-color: rgba(226, 76, 76, 0.1) !important;
 }
 
 /* TOPBAR */
@@ -157,13 +154,14 @@
 .search-container {
   display: flex;
   align-items: center;
-  background-color: #ffffff;
+  background-color: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 6px;
   padding: 0 12px;
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
   height: 34px;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.3s;
 }
 
 .search-container:focus-within {
@@ -189,7 +187,7 @@
 }
 
 .search-input::placeholder {
-  color: #adb0b8;
+  color: var(--text-muted);
 }
 
 .spacer {
@@ -248,11 +246,11 @@
 
 .widget-card {
   flex: 1;
-  background: #ffffff;
+  background-color: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  box-shadow: 0 2px 8px var(--shadow-color);
 }
 
 .widget-header {
@@ -329,10 +327,10 @@
 
 /* LIST VIEW CONTAINER */
 .list-view-container {
-  background: #ffffff;
+  background-color: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  box-shadow: 0 2px 8px var(--shadow-color);
   overflow: hidden;
 }
 
@@ -372,7 +370,7 @@
 
 .task-table td {
   padding: 8px 16px !important;
-  border-bottom: 1px solid #f0f1f4;
+  border-bottom: 1px solid var(--border-color);
   font-size: 0.9rem;
 }
 

@@ -8,6 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
+import { ThemeService } from '../theme.service';
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -26,6 +28,7 @@ import { MatIconModule } from '@angular/material/icon';
 export class LoginComponent {
   private fb = inject(FormBuilder);
   private router = inject(Router);
+  public themeService = inject(ThemeService);
 
   loginForm = this.fb.group({
     username: ['', [Validators.required, Validators.email]],

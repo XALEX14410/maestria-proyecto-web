@@ -3,8 +3,9 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #f4f5f7 0%, #e2e4e9 100%);
+  background-color: var(--bg-main);
   padding: 1rem;
+  transition: background-color 0.3s;
 }
 
 .login-card {
@@ -12,10 +13,12 @@
   max-width: 420px;
   padding: 2.5rem 2rem;
   border-radius: 16px;
-  box-shadow: 0 12px 32px rgba(9, 30, 66, 0.08);
-  background-color: #ffffff;
+  box-shadow: 0 12px 32px var(--shadow-color);
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
   animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   box-sizing: border-box;
+  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
 
 .login-header {
@@ -29,17 +32,17 @@
 .logo-container {
   width: 56px;
   height: 56px;
-  background: linear-gradient(135deg, #0052cc 0%, #0747a6 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
   border-radius: 12px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 1rem;
-  box-shadow: 0 4px 12px rgba(0, 82, 204, 0.3);
+  box-shadow: 0 4px 12px var(--shadow-color-hover);
 }
 
 .login-logo {
-  color: white;
+  color: #ffffff;
   font-size: 32px;
   width: 32px;
   height: 32px;
@@ -48,7 +51,7 @@
 .login-title {
   font-size: 24px;
   font-weight: 700;
-  color: #172b4d;
+  color: var(--text-main);
   letter-spacing: -0.5px;
   margin-bottom: 0.5rem;
 }
@@ -64,7 +67,7 @@
 }
 
 .input-icon {
-  color: #6b778c;
+  color: var(--text-muted);
   margin-right: 8px;
 }
 
@@ -74,14 +77,15 @@
   font-weight: 500;
   border-radius: 8px;
   margin-top: 1rem;
-  background-color: #0052cc;
+  background-color: var(--primary);
+  color: #ffffff;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 .submit-button:hover:not([disabled]) {
-  background-color: #0747a6;
+  background-color: var(--primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 82, 204, 0.25);
+  box-shadow: 0 6px 16px var(--shadow-color-hover);
 }
 
 @keyframes slideUpFade {
@@ -93,4 +97,41 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.theme-toggle-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: var(--text-muted);
+}
+
+::ng-deep .dark-theme .login-card {
+  background-color: var(--bg-card);
+}
+
+::ng-deep .dark-theme mat-card-title,
+::ng-deep .dark-theme mat-card-subtitle,
+::ng-deep .dark-theme .mat-mdc-card-title,
+::ng-deep .dark-theme .mat-mdc-card-subtitle {
+  color: var(--text-main) !important;
+}
+
+::ng-deep .dark-theme .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,
+::ng-deep .dark-theme .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,
+::ng-deep .dark-theme .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
+  border-color: var(--border-color) !important;
+}
+
+::ng-deep .dark-theme .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-floating-label {
+  color: var(--text-muted) !important;
+}
+
+::ng-deep .dark-theme .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {
+  color: var(--text-main) !important;
+}
+
+::ng-deep .dark-theme .mat-mdc-input-element::placeholder,
+::ng-deep .dark-theme .mdc-text-field__input::placeholder {
+  color: var(--text-muted) !important;
 }

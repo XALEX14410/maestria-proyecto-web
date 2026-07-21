@@ -1,6 +1,7 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -64,16 +65,26 @@ const TASK_DATA: TaskItem[] = [
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   private router = inject(Router);
   private dialog = inject(MatDialog);
   public themeService = inject(ThemeService);
+  private http = inject(HttpClient);
 
   isSidebarExpanded = signal(true);
   currentView = signal<string>('inicio');
+  mensajes = signal<any[]>([]);
 
   displayedColumns = ['status', 'name', 'assignee', 'priority', 'sprint', 'date', 'labels'];
   dataSource = signal<TaskItem[]>(TASK_DATA);
+
+  ngOnInit() {
+    this.http.get<any[]>('http://localhost:8080/api/v1/mensajes')
+      .subscribe({
+        next: (data) => this.mensajes.set(data),
+        error: (err) => console.error('Error fetching messages', err)
+      });
+  }
 
   toggleSidebar() {
     this.isSidebarExpanded.set(!this.isSidebarExpanded());

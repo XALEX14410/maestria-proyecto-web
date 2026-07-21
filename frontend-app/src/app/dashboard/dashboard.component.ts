@@ -18,6 +18,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { PremiumDialogComponent } from '../dialogs/premium-dialog/premium-dialog.component';
+import { ThemeService } from '../theme.service';
 
 export interface TaskItem {
   id: string;
@@ -66,6 +67,7 @@ const TASK_DATA: TaskItem[] = [
 export class DashboardComponent {
   private router = inject(Router);
   private dialog = inject(MatDialog);
+  public themeService = inject(ThemeService);
 
   isSidebarExpanded = signal(true);
   currentView = signal<string>('inicio');
@@ -75,6 +77,10 @@ export class DashboardComponent {
 
   toggleSidebar() {
     this.isSidebarExpanded.set(!this.isSidebarExpanded());
+  }
+
+  toggleTheme() {
+    this.themeService.toggleTheme();
   }
 
   changeView(view: string) {

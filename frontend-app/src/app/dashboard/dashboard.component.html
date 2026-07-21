@@ -1,4 +1,4 @@
-<mat-sidenav-container class="workspace-container">
+<mat-sidenav-container class="workspace-container" autosize>
   
   <!-- SIDEBAR -->
   <mat-sidenav mode="side" opened class="sidebar" [class.collapsed]="!isSidebarExpanded()">
@@ -71,6 +71,10 @@
       <!-- Actions -->
       <button mat-flat-button color="primary" class="new-task-btn">
         <mat-icon>add</mat-icon> Nueva tarea
+      </button>
+
+      <button mat-icon-button (click)="toggleTheme()" class="theme-btn text-muted" matTooltip="Cambiar tema">
+        <mat-icon>{{ themeService.isDarkMode() ? 'light_mode' : 'dark_mode' }}</mat-icon>
       </button>
 
       <button mat-icon-button class="notification-btn text-muted" matBadge="3" matBadgeColor="warn" matBadgeSize="small">

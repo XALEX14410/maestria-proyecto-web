@@ -1,0 +1,15 @@
+:root {
+  /* Light Theme Variables */
+  --primary: #5e6ad2;
+  --primary-hover: #4b55a8;
+  --bg-main: #f7f8fa;
+  --bg-sidebar: #ffffff;
+  --bg-card: #ffffff;
+  --border-color: #e6e8eb;
+  --text-main: #1d1d20;
+  --text-muted: #858699;
+  --text-inverse: #ffffff;
+  --hover-bg: #f2f3f5;
+  --shadow-color: rgba(9, 30, 66, 0.08);
+  --shadow-color-hover: rgba(0, 82, 204, 0.25);
+}

@@ -124,13 +124,13 @@
           </div>
 
           <!-- Neon DB Messages -->
-          <div class="widget-card" style="overflow-y: auto; max-height: 150px;">
+          <div class="widget-card neon-messages-card">
             <div class="widget-header">
               <h3>Datos desde Neon (PostgreSQL)</h3>
               <mat-icon class="star-icon" style="color: #00e599;">cloud</mat-icon>
             </div>
-            <ul style="padding-left: 20px; margin-top: 10px;">
-              <li *ngFor="let msg of mensajes()" style="margin-bottom: 5px;">
+            <ul class="neon-messages-list">
+              <li *ngFor="let msg of mensajes()">
                 <strong>{{ msg.remitente }}</strong> dice: {{ msg.texto }}
               </li>
               <li *ngIf="mensajes().length === 0" class="text-muted">No hay mensajes.</li>

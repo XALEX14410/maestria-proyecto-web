@@ -1,0 +1,8 @@
+/* Global utility classes that adapt to theme */
+.text-muted {
+  color: var(--text-muted) !important;
+}
+
+.text-danger {
+  color: #e24c4c !important;
+}

@@ -1,55 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 
-:root {
-  /* Light Theme Variables */
-  --primary: #5e6ad2;
-  --primary-hover: #4b55a8;
-  --bg-main: #f7f8fa;
-  --bg-sidebar: #ffffff;
-  --bg-card: #ffffff;
-  --border-color: #e6e8eb;
-  --text-main: #1d1d20;
-  --text-muted: #858699;
-  --text-inverse: #ffffff;
-  --hover-bg: #f2f3f5;
-  --shadow-color: rgba(9, 30, 66, 0.08);
-  --shadow-color-hover: rgba(0, 82, 204, 0.25);
-}
-
-.dark-theme {
-  /* Dark Theme Variables */
-  --primary: #7b86e8;
-  --primary-hover: #9ca4f0;
-  --bg-main: #121212;
-  --bg-sidebar: #1e1e1e;
-  --bg-card: #1e1e1e;
-  --border-color: #333333;
-  --text-main: #e0e0e0;
-  --text-muted: #a0a0a0;
-  --text-inverse: #121212;
-  --hover-bg: #2d2d2d;
-  --shadow-color: rgba(0, 0, 0, 0.5);
-  --shadow-color-hover: rgba(123, 134, 232, 0.4);
-}
-
-html, body { 
-  height: 100%; 
-}
-
-body { 
-  margin: 0; 
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background-color: var(--bg-main);
-  color: var(--text-main);
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* Global utility classes that adapt to theme */
-.text-muted {
-  color: var(--text-muted) !important;
-}
-
-.text-danger {
-  color: #e24c4c !important;
-}
+@import './styles/variables.css';
+@import './styles/themes.css';
+@import './styles/reset.css';
+@import './styles/utilities.css';

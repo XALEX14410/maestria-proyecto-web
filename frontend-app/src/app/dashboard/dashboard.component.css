@@ -325,6 +325,22 @@
   font-size: 0.85rem;
 }
 
+/* NEON MESSAGES WIDGET */
+.neon-messages-card {
+  overflow-y: auto;
+  max-height: 150px;
+}
+
+.neon-messages-list {
+  padding-left: 20px;
+  margin-top: 10px;
+  color: var(--text-main);
+}
+
+.neon-messages-list li {
+  margin-bottom: 5px;
+}
+
 /* LIST VIEW CONTAINER */
 .list-view-container {
   background-color: var(--bg-card);

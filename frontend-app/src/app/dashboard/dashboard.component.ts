@@ -1,7 +1,11 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AiService } from '../services/ai';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -60,7 +64,10 @@ const TASK_DATA: TaskItem[] = [
     MatDialogModule,
     MatBadgeModule,
     MatListModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    FormsModule,
+    MatInputModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
@@ -74,6 +81,12 @@ export class DashboardComponent implements OnInit {
   isSidebarExpanded = signal(true);
   currentView = signal<string>('inicio');
   mensajes = signal<any[]>([]);
+
+  textoUsuario: string = '';
+  respuestaIA: string = '';
+  cargando: boolean = false;
+  private aiService = inject(AiService);
+  private cdr = inject(ChangeDetectorRef);
 
   displayedColumns = ['status', 'name', 'assignee', 'priority', 'sprint', 'date', 'labels'];
   dataSource = signal<TaskItem[]>(TASK_DATA);
@@ -109,6 +122,32 @@ export class DashboardComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'logout') {
         this.router.navigate(['/login']);
+      }
+    });
+  }
+
+  enviarPregunta() {
+    if(!this.textoUsuario.trim()) {
+      return; // No enviar si el campo está vacío
+    }
+    this.cargando = true; // Mostrar indicador de carga
+    this.respuestaIA = ''; // Limpiar la respuesta anterior
+    this.aiService.consultarInteligenciaArtificial(this.textoUsuario).subscribe({
+      next: (res) => {
+        console.log("NEXT ejecutando...")
+        this.respuestaIA = res.respuesta;
+        this.cargando = false;
+        this.cdr.detectChanges(); // Forzar la detección de cambios para actualizar la vista
+        console.log("cargando =", this.cargando);
+        console.log("respuestaIA =", this.respuestaIA);
+      },
+      error: (err) => {
+        console.error('Error al consultar la IA:', err);
+        this.respuestaIA = 'Ocurrió un error al procesar tu solicitud con el cerebro.';
+        this.cargando = false;
+      },
+      complete: () => {
+        console.log("COMPLETE")
       }
     });
   }

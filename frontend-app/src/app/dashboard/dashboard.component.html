@@ -91,6 +91,37 @@
       
       <!-- INICIO VIEW -->
       <ng-container *ngIf="currentView() === 'inicio'">
+        <!-- ASISTENTE INTELIGENTE (SaaS AI) -->
+        <div class="dashboard-container" style="padding: 20px 0;">
+          <mat-card class="ai-card">
+            <mat-card-header>
+              <mat-card-title> Asistente Inteligente (SaaS AI)</mat-card-title>
+            </mat-card-header>
+            <mat-card-content style="margin-top: 15px;">
+              <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Escribe un texto o consulta para analizar...</mat-label>
+                <input matInput [(ngModel)]="textoUsuario" placeholder="Ej. Analiza este reporte de ventas...">
+              </mat-form-field>
+              <button mat-raised-button color="primary"
+                (click)="enviarPregunta()" [disabled]="cargando">
+                Procesar con IA
+              </button>
+              
+              <!-- Estado de carga -->
+              <div *ngIf="cargando" style="margin-top: 20px; display: flex; align-items: center; gap: 10px;">
+                <mat-spinner diameter="30"></mat-spinner>
+                <span>El cerebro está pensando...</span>
+              </div>
+              
+              <!-- Resultado -->
+              <div *ngIf="respuestaIA" style="margin-top: 20px; background: #f5f5f5; padding: 15px; border-radius: 8px;">
+                <strong>Respuesta del Sistema:</strong>
+                <p style="margin-top: 5px; white-space: pre-line; color: #333;">{{ respuestaIA }}</p>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
         <!-- TOP WIDGETS -->
         <div class="widgets-row">
           <!-- Sprint Progress -->

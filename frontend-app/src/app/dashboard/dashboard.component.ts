@@ -83,8 +83,10 @@ export class DashboardComponent implements OnInit {
   mensajes = signal<any[]>([]);
 
   textoUsuario: string = '';
-  respuestaIA: string = '';
+  historialChat: { role: 'user' | 'ai' | 'error', content: string }[] = [];
   cargando: boolean = false;
+  isChatOpen: boolean = false;
+
   private aiService = inject(AiService);
   private cdr = inject(ChangeDetectorRef);
 
@@ -126,29 +128,42 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  toggleChat() {
+    this.isChatOpen = !this.isChatOpen;
+  }
+
   enviarPregunta() {
     if(!this.textoUsuario.trim()) {
-      return; // No enviar si el campo está vacío
+      return; 
     }
-    this.cargando = true; // Mostrar indicador de carga
-    this.respuestaIA = ''; // Limpiar la respuesta anterior
-    this.aiService.consultarInteligenciaArtificial(this.textoUsuario).subscribe({
+    const pregunta = this.textoUsuario.trim();
+    this.historialChat.push({ role: 'user', content: pregunta });
+    this.textoUsuario = ''; 
+    this.cargando = true; 
+
+    this.aiService.consultarInteligenciaArtificial(pregunta).subscribe({
       next: (res) => {
-        console.log("NEXT ejecutando...")
-        this.respuestaIA = res.respuesta;
+        this.historialChat.push({ role: 'ai', content: res.respuesta });
         this.cargando = false;
-        this.cdr.detectChanges(); // Forzar la detección de cambios para actualizar la vista
-        console.log("cargando =", this.cargando);
-        console.log("respuestaIA =", this.respuestaIA);
+        this.cdr.detectChanges(); 
+        this.scrollToBottom();
       },
       error: (err) => {
         console.error('Error al consultar la IA:', err);
-        this.respuestaIA = 'Ocurrió un error al procesar tu solicitud con el cerebro.';
+        this.historialChat.push({ role: 'error', content: 'Ocurrió un error al procesar tu solicitud con el cerebro.' });
         this.cargando = false;
-      },
-      complete: () => {
-        console.log("COMPLETE")
+        this.cdr.detectChanges();
+        this.scrollToBottom();
       }
     });
+  }
+
+  scrollToBottom() {
+    setTimeout(() => {
+      const container = document.querySelector('.ai-chat-scroll-area');
+      if (container) {
+        container.scrollTop = container.scrollHeight;
+      }
+    }, 50);
   }
 }

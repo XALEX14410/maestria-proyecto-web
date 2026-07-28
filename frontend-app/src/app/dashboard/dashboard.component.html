@@ -249,3 +249,52 @@
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<!-- FLOATING AI CHAT WIDGET -->
+<div class="ai-chat-widget">
+  <div class="ai-chat-window" [class.open]="isChatOpen">
+    <mat-card class="ai-chat-card">
+      <mat-card-header>
+        <div class="ai-chat-header-content">
+          <mat-icon>smart_toy</mat-icon>
+          <span>SaaS AI</span>
+        </div>
+        <button mat-icon-button (click)="toggleChat()" class="close-chat-btn">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-card-header>
+      <mat-card-content class="ai-chat-content">
+        
+        <!-- ZONA DE SCROLL CON HISTORIAL -->
+        <div class="ai-chat-scroll-area">
+          <div *ngFor="let msg of historialChat" class="fade-in"
+               [ngClass]="msg.role === 'user' ? 'ai-msg-user' : (msg.role === 'error' ? 'ai-msg-error' : 'ai-msg-ai')">
+            <strong *ngIf="msg.role === 'user'">Tú:</strong>
+            <strong *ngIf="msg.role !== 'user'">Respuesta:</strong>
+            <p>{{ msg.content }}</p>
+          </div>
+
+          <!-- Estado de carga -->
+          <div *ngIf="cargando" class="ai-loading-box">
+            <mat-spinner diameter="24"></mat-spinner>
+            <span>Pensando...</span>
+          </div>
+        </div>
+
+        <div class="ai-chat-input-area">
+          <mat-form-field appearance="outline" class="ai-chat-input">
+            <mat-label>Escribe una consulta...</mat-label>
+            <textarea matInput [(ngModel)]="textoUsuario" rows="2" placeholder="Ej. Analiza este reporte..." (keydown.enter)="$event.preventDefault(); enviarPregunta()"></textarea>
+          </mat-form-field>
+          <button mat-fab color="primary" class="ai-send-btn" (click)="enviarPregunta()" [disabled]="cargando || !textoUsuario.trim()">
+            <mat-icon>send</mat-icon>
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <button mat-fab color="primary" class="ai-chat-fab" (click)="toggleChat()" matTooltip="Asistente de IA" [class.hidden]="isChatOpen">
+    <mat-icon>smart_toy</mat-icon>
+  </button>
+</div>

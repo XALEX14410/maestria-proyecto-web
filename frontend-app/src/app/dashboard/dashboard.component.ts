@@ -1,7 +1,11 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AiService } from '../services/ai';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -60,7 +64,10 @@ const TASK_DATA: TaskItem[] = [
     MatDialogModule,
     MatBadgeModule,
     MatListModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    FormsModule,
+    MatInputModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
@@ -74,6 +81,14 @@ export class DashboardComponent implements OnInit {
   isSidebarExpanded = signal(true);
   currentView = signal<string>('inicio');
   mensajes = signal<any[]>([]);
+
+  textoUsuario: string = '';
+  historialChat: { role: 'user' | 'ai' | 'error', content: string }[] = [];
+  cargando: boolean = false;
+  isChatOpen: boolean = false;
+
+  private aiService = inject(AiService);
+  private cdr = inject(ChangeDetectorRef);
 
   displayedColumns = ['status', 'name', 'assignee', 'priority', 'sprint', 'date', 'labels'];
   dataSource = signal<TaskItem[]>(TASK_DATA);
@@ -111,5 +126,44 @@ export class DashboardComponent implements OnInit {
         this.router.navigate(['/login']);
       }
     });
+  }
+
+  toggleChat() {
+    this.isChatOpen = !this.isChatOpen;
+  }
+
+  enviarPregunta() {
+    if(!this.textoUsuario.trim()) {
+      return; 
+    }
+    const pregunta = this.textoUsuario.trim();
+    this.historialChat.push({ role: 'user', content: pregunta });
+    this.textoUsuario = ''; 
+    this.cargando = true; 
+
+    this.aiService.consultarInteligenciaArtificial(pregunta).subscribe({
+      next: (res) => {
+        this.historialChat.push({ role: 'ai', content: res.respuesta });
+        this.cargando = false;
+        this.cdr.detectChanges(); 
+        this.scrollToBottom();
+      },
+      error: (err) => {
+        console.error('Error al consultar la IA:', err);
+        this.historialChat.push({ role: 'error', content: 'Ocurrió un error al procesar tu solicitud con el cerebro.' });
+        this.cargando = false;
+        this.cdr.detectChanges();
+        this.scrollToBottom();
+      }
+    });
+  }
+
+  scrollToBottom() {
+    setTimeout(() => {
+      const container = document.querySelector('.ai-chat-scroll-area');
+      if (container) {
+        container.scrollTop = container.scrollHeight;
+      }
+    }, 50);
   }
 }

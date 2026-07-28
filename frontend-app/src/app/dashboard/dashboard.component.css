@@ -533,3 +533,189 @@
     margin-right: 16px;
   }
 }
+
+/* FLOATING AI CHAT WIDGET */
+.ai-chat-widget {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.ai-chat-fab {
+  transition: transform 0.3s ease-in-out, opacity 0.3s;
+}
+
+.ai-chat-fab.hidden {
+  transform: scale(0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ai-chat-window {
+  position: absolute;
+  bottom: 80px;
+  right: 0;
+  width: 350px;
+  max-width: calc(100vw - 48px);
+  max-height: 90vh; /* Requisito: height max 90vh */
+  display: flex;
+  flex-direction: column;
+  transform: scale(0);
+  transform-origin: bottom right;
+  opacity: 0;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
+  pointer-events: none;
+}
+
+.ai-chat-window.open {
+  transform: scale(1);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.ai-chat-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  max-height: 90vh;
+}
+
+.ai-chat-card mat-card-header {
+  background: var(--primary, #5e6ad2);
+  color: white;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ai-chat-header-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.ai-chat-header-content mat-icon {
+  margin-right: 4px;
+}
+
+.close-chat-btn {
+  color: white;
+  transform: scale(0.85);
+}
+
+.ai-chat-content {
+  background: var(--bg-card);
+  color: var(--text-main);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 250px;
+  max-height: calc(90vh - 64px);
+  justify-content: flex-end;
+}
+
+.ai-chat-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-right: 4px;
+}
+
+.ai-msg-user, .ai-msg-ai, .ai-msg-error {
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.ai-msg-user {
+  background: rgba(94, 106, 210, 0.1);
+  border-right: 4px solid var(--primary, #5e6ad2);
+  align-self: flex-end;
+  text-align: right;
+  margin-left: 20px;
+}
+
+.ai-msg-ai {
+  background: var(--hover-bg, rgba(128, 128, 128, 0.1));
+  border-left: 4px solid var(--primary, #5e6ad2);
+  align-self: flex-start;
+  margin-right: 20px;
+}
+
+.ai-msg-error {
+  background: rgba(226, 76, 76, 0.1);
+  border-left: 4px solid #e24c4c;
+  color: #e24c4c;
+}
+
+.ai-msg-user p, .ai-msg-ai p, .ai-msg-error p {
+  margin: 4px 0 0;
+  white-space: pre-line;
+  line-height: 1.4;
+}
+
+.ai-loading-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-muted);
+  font-size: 13px;
+  padding: 12px;
+}
+
+.ai-chat-input-area {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  margin-top: 12px;
+}
+
+.ai-chat-input {
+  flex: 1;
+  margin-bottom: -1.25em;
+}
+
+/* Force dark mode compatibility for the textarea */
+.ai-chat-input ::ng-deep .mdc-text-field--outlined {
+  --mdc-outlined-text-field-input-text-color: var(--text-main);
+  --mdc-outlined-text-field-label-text-color: var(--text-main); /* Cambiado de text-muted a text-main para mayor contraste inactivo */
+  --mdc-outlined-text-field-hover-label-text-color: var(--text-main);
+  --mdc-outlined-text-field-focus-label-text-color: var(--primary);
+  --mdc-outlined-text-field-caret-color: var(--primary);
+  --mdc-outlined-text-field-outline-color: var(--text-muted); /* Más visible que border-color */
+  --mdc-outlined-text-field-hover-outline-color: var(--text-main);
+  --mdc-outlined-text-field-focus-outline-color: var(--primary);
+}
+
+.ai-chat-input ::ng-deep textarea.mat-mdc-input-element {
+  color: var(--text-main) !important;
+  -webkit-text-fill-color: var(--text-main) !important;
+}
+
+.ai-chat-input ::ng-deep textarea.mat-mdc-input-element::placeholder {
+  color: var(--text-muted) !important;
+  -webkit-text-fill-color: var(--text-muted) !important;
+}
+
+.ai-chat-input ::ng-deep .mdc-floating-label {
+  color: var(--text-main) !important;
+}
+
+.ai-send-btn {
+  margin-bottom: 4px;
+  transform: scale(0.8);
+}

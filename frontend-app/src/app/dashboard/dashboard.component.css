@@ -142,8 +142,8 @@
 .workspace-area {
   display: grid;
   gap: 20px;
-  max-width: 1400px;
-  margin: 0 auto;
+  max-width: 1480px;
+  margin: 0 24px;
   padding: 24px;
 }
 
@@ -182,6 +182,8 @@
   font-size: 1.55rem;
 }
 
+.task-detail p, .task-detail h3, .detail-grid strong { color: var(--clay-text); }
+
 .task-shell { overflow: hidden; }
 .task-shell > .section-header, .filters-row {
   padding: 16px 18px;
@@ -211,6 +213,10 @@
   padding: 10px 14px;
   border-bottom: 1px solid var(--border-color);
   color: var(--clay-text);
+}
+
+.task-table th {
+  color: var(--clay-text-muted);
 }
 
 .task-row:hover { background: rgba(112, 87, 232, .07); }

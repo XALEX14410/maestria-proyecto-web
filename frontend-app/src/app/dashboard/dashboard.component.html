@@ -1,75 +1,62 @@
 <mat-sidenav-container class="workspace-container" autosize>
-  
-  <!-- SIDEBAR -->
   <mat-sidenav mode="side" opened class="sidebar" [class.collapsed]="!isSidebarExpanded()">
     <div class="sidebar-header">
       <mat-icon class="logo-icon">rocket_launch</mat-icon>
       <span class="logo-text">TaskHive</span>
     </div>
 
+    <div class="workspace-switcher" [class.compact]="!isSidebarExpanded()">
+      <mat-icon>domain</mat-icon>
+      <div>
+        <span>Organizacion</span>
+        <strong>TaskHive Core</strong>
+      </div>
+    </div>
+
     <mat-nav-list class="sidebar-nav">
-      <a mat-list-item [class.active]="currentView() === 'inicio'" (click)="changeView('inicio')">
-        <mat-icon matListItemIcon>home</mat-icon>
-        <span matListItemTitle>Inicio</span>
-      </a>
-      <a mat-list-item [class.active]="currentView() === 'espacios'" (click)="changeView('espacios')">
-        <mat-icon matListItemIcon>folder_copy</mat-icon>
-        <span matListItemTitle>Espacios</span>
-      </a>
-      <a mat-list-item [class.active]="currentView() === 'proyectos'" (click)="changeView('proyectos')">
-        <mat-icon matListItemIcon>work</mat-icon>
-        <span matListItemTitle>Proyectos</span>
-      </a>
-      <a mat-list-item [class.active]="currentView() === 'tareas'" (click)="changeView('tareas')">
-        <mat-icon matListItemIcon>task_alt</mat-icon>
-        <span matListItemTitle>Tareas</span>
-      </a>
-      <a mat-list-item [class.active]="currentView() === 'sprints'" (click)="changeView('sprints')">
-        <mat-icon matListItemIcon>directions_run</mat-icon>
-        <span matListItemTitle>Sprints</span>
-      </a>
-      <a mat-list-item [class.active]="currentView() === 'equipo'" (click)="changeView('equipo')">
-        <mat-icon matListItemIcon>group</mat-icon>
-        <span matListItemTitle>Equipo</span>
-      </a>
-      <a mat-list-item [class.active]="currentView() === 'reportes'" (click)="changeView('reportes')">
-        <mat-icon matListItemIcon>bar_chart</mat-icon>
-        <span matListItemTitle>Reportes</span>
-      </a>
+      @for (item of navigation; track item.id) {
+        <a mat-list-item [class.active]="currentView() === item.id" (click)="changeView(item.id)" [matTooltip]="isSidebarExpanded() ? '' : item.label">
+          <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+          <span matListItemTitle>{{ item.label }}</span>
+          @if (item.comingSoon && isSidebarExpanded()) {
+            <span class="soon-chip">Proximamente</span>
+          }
+        </a>
+      }
     </mat-nav-list>
 
     <div class="sidebar-spacer"></div>
 
     <mat-nav-list class="sidebar-nav-bottom">
+      <a mat-list-item [class.active]="currentView() === 'notificaciones'" (click)="changeView('notificaciones')">
+        <mat-icon matListItemIcon>notifications_none</mat-icon>
+        <span matListItemTitle>Notificaciones</span>
+      </a>
       <a mat-list-item [class.active]="currentView() === 'configuracion'" (click)="changeView('configuracion')">
         <mat-icon matListItemIcon>settings</mat-icon>
-        <span matListItemTitle>Configuración</span>
+        <span matListItemTitle>Configuracion</span>
       </a>
       <a mat-list-item (click)="logout()" class="logout-btn">
         <mat-icon matListItemIcon color="warn">logout</mat-icon>
-        <span matListItemTitle class="text-danger">Cerrar sesión</span>
+        <span matListItemTitle class="text-danger">Cerrar sesion</span>
       </a>
     </mat-nav-list>
   </mat-sidenav>
 
-  <!-- MAIN CONTENT -->
   <mat-sidenav-content class="main-content">
-    <!-- TOPBAR -->
     <header class="topbar">
-      <button mat-icon-button (click)="toggleSidebar()" class="menu-btn text-muted">
+      <button mat-icon-button (click)="toggleSidebar()" class="menu-btn text-muted" matTooltip="Contraer menu">
         <mat-icon>{{ isSidebarExpanded() ? 'menu_open' : 'menu' }}</mat-icon>
       </button>
 
-      <!-- Search -->
       <div class="search-container">
         <mat-icon class="search-icon">search</mat-icon>
-        <input type="text" placeholder="Buscar tareas, proyectos o personas..." class="search-input">
+        <input type="text" [formControl]="searchControl" placeholder="Buscar tareas, proyectos o etiquetas..." class="search-input">
       </div>
 
       <span class="spacer"></span>
 
-      <!-- Actions -->
-      <button mat-flat-button color="primary" class="new-task-btn">
+      <button mat-flat-button color="primary" class="new-task-btn" [disabled]="!permissions.has('task.create')" matTooltip="Requiere contrato POST completo">
         <mat-icon>add</mat-icon> Nueva tarea
       </button>
 
@@ -77,7 +64,7 @@
         <mat-icon>{{ themeService.isDarkMode() ? 'light_mode' : 'dark_mode' }}</mat-icon>
       </button>
 
-      <button mat-icon-button class="notification-btn text-muted" matBadge="3" matBadgeColor="warn" matBadgeSize="small">
+      <button mat-icon-button class="notification-btn text-muted" matBadge="3" matBadgeColor="warn" matBadgeSize="small" (click)="changeView('notificaciones')" matTooltip="Notificaciones">
         <mat-icon>notifications_none</mat-icon>
       </button>
 
@@ -86,171 +73,331 @@
       </div>
     </header>
 
-    <!-- WORKSPACE AREA -->
-    <div class="workspace-area fade-in">
-      
-      <!-- INICIO VIEW -->
-      <ng-container *ngIf="currentView() === 'inicio'">
-        <!-- TOP WIDGETS -->
-        <div class="widgets-row">
-          <!-- Sprint Progress -->
-          <div class="widget-card">
-            <div class="widget-header">
-              <h3>Sprint 42</h3>
-              <span class="days-left text-muted">Quedan 3 días</span>
-            </div>
-            <mat-progress-bar mode="determinate" value="70" class="custom-progress"></mat-progress-bar>
-            <div class="sprint-stats text-muted">
-              <span>70% completado</span>
-              <span>24 tareas</span>
-            </div>
-          </div>
+    <main class="workspace-area fade-in">
+      <nav class="breadcrumbs" aria-label="Ruta">
+        <span>TaskHive</span>
+        <mat-icon>chevron_right</mat-icon>
+        <strong>{{ currentView() }}</strong>
+      </nav>
 
-          <!-- Recent Project -->
-          <div class="widget-card">
-            <div class="widget-header">
-              <h3>Proyecto favorito</h3>
-              <mat-icon class="star-icon">star</mat-icon>
-            </div>
-            <div class="project-details">
-              <div class="project-icon-wrapper">
-                <mat-icon>rocket</mat-icon>
-              </div>
-              <div>
-                <h4>Rediseño Arquitectura Cloud</h4>
-                <p class="text-muted">Actualizado hace 2 horas</p>
-              </div>
-            </div>
-          </div>
+      @if (taskRepository.error()) {
+        <section class="state-banner error">
+          <mat-icon>error_outline</mat-icon>
+          <span>{{ taskRepository.error() }}</span>
+          <button mat-button (click)="taskRepository.retry()">Reintentar</button>
+        </section>
+      }
 
-          <!-- Neon DB Messages -->
-          <div class="widget-card neon-messages-card">
+      @if (currentView() === 'inicio') {
+        <section class="summary-grid">
+          <article class="widget-card">
             <div class="widget-header">
-              <h3>Datos desde Neon (PostgreSQL)</h3>
-              <mat-icon class="star-icon" style="color: #00e599;">cloud</mat-icon>
+              <h3>Trabajo activo</h3>
+              <mat-icon>task_alt</mat-icon>
+            </div>
+            <strong>{{ taskRepository.allTasks().length }}</strong>
+            <span class="text-muted">tareas sincronizadas</span>
+          </article>
+
+          <article class="widget-card">
+            <div class="widget-header">
+              <h3>Vencidas</h3>
+              <mat-icon>warning</mat-icon>
+            </div>
+            <strong>{{ overdueTasks().length }}</strong>
+            <span class="text-muted">requieren seguimiento</span>
+          </article>
+
+          <article class="widget-card neon-messages-card">
+            <div class="widget-header">
+              <h3>Datos Neon</h3>
+              <mat-icon>cloud</mat-icon>
             </div>
             <ul class="neon-messages-list">
-              <li *ngFor="let msg of mensajes()">
-                <strong>{{ msg.remitente }}</strong> dice: {{ msg.texto }}
-              </li>
-              <li *ngIf="mensajes().length === 0" class="text-muted">No hay mensajes.</li>
+              @for (msg of mensajes(); track msg.remitente + msg.texto) {
+                <li><strong>{{ msg.remitente }}</strong>: {{ msg.texto }}</li>
+              } @empty {
+                <li class="text-muted">Sin mensajes disponibles.</li>
+              }
             </ul>
-          </div>
-        </div>
+          </article>
+        </section>
 
-        <!-- TASK LIST VIEW -->
-        <div class="list-view-container">
-          <div class="list-header">
-            <h2>Mis tareas (Sprint 42)</h2>
-            <div class="list-actions">
-              <button mat-icon-button matTooltip="Filtros" class="text-muted"><mat-icon>filter_list</mat-icon></button>
-              <button mat-icon-button matTooltip="Agrupar" class="text-muted"><mat-icon>view_agenda</mat-icon></button>
+        <section class="section-header">
+          <div>
+            <h1>Inicio</h1>
+            <p>Resumen operativo del espacio, proyectos y tareas del MVP.</p>
+          </div>
+          <button mat-stroked-button (click)="setTaskView('list')">
+            <mat-icon>view_list</mat-icon>
+            Ver tareas
+          </button>
+        </section>
+
+        <section class="quick-panels">
+          <article>
+            <h2>Espacios</h2>
+            <p>TaskHive Core contiene el proyecto Plataforma MVP y la lista Sprint 42.</p>
+          </article>
+          <article>
+            <h2>Agenda</h2>
+            <p>La agenda mensual usa las mismas fechas de inicio y limite de las tareas.</p>
+          </article>
+          <article>
+            <h2>Permisos</h2>
+            <p>Rol frontend actual: Manager. El backend debe validar permisos de forma independiente.</p>
+          </article>
+        </section>
+      }
+
+      @if (currentView() === 'mi-trabajo' || currentView() === 'proyectos' || currentView() === 'tareas' || currentView() === 'agenda') {
+        <section class="task-shell">
+          <div class="section-header">
+            <div>
+              <h1>{{ currentView() === 'agenda' ? 'Agenda' : currentView() === 'mi-trabajo' ? 'Mi trabajo' : 'Proyectos' }}</h1>
+              <p>Lista, tablero, calendario y cronograma comparten el mismo repositorio de tareas.</p>
+            </div>
+            <div class="view-switcher" aria-label="Vistas de tareas">
+              <button mat-icon-button [class.active]="activeTaskView() === 'list'" (click)="setTaskView('list')" matTooltip="Lista"><mat-icon>view_list</mat-icon></button>
+              <button mat-icon-button [class.active]="activeTaskView() === 'kanban'" (click)="setTaskView('kanban')" matTooltip="Kanban"><mat-icon>view_kanban</mat-icon></button>
+              <button mat-icon-button [class.active]="activeTaskView() === 'calendar'" (click)="setTaskView('calendar')" matTooltip="Calendario"><mat-icon>calendar_month</mat-icon></button>
+              <button mat-icon-button [class.active]="activeTaskView() === 'gantt'" (click)="setTaskView('gantt')" matTooltip="Cronograma"><mat-icon>timeline</mat-icon></button>
             </div>
           </div>
 
-          <div class="table-wrapper">
-            <table mat-table [dataSource]="dataSource()" class="task-table">
-              
-              <!-- Status Column -->
-              <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef> Estado </th>
-                <td mat-cell *matCellDef="let task">
-                  <span class="status-chip"
-                        [class.status-backlog]="task.status === 'Backlog'"
-                        [class.status-pending]="task.status === 'Pendiente'"
-                        [class.status-progress]="task.status === 'En progreso'"
-                        [class.status-review]="task.status === 'En revisión'"
-                        [class.status-blocked]="task.status === 'Bloqueada'"
-                        [class.status-done]="task.status === 'Completada'">
-                    <div class="status-dot"></div>
-                    {{task.status}}
-                  </span>
-                </td>
-              </ng-container>
+          <div class="filters-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Estado</mat-label>
+              <mat-select [value]="taskRepository.taskQuery().status" (selectionChange)="taskRepository.updateQuery({ status: $event.value })">
+                <mat-option value="all">Todos</mat-option>
+                @for (status of statusColumns; track status.id) {
+                  <mat-option [value]="status.id">{{ status.label }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
 
-              <!-- Name Column -->
-              <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                <td mat-cell *matCellDef="let task">
-                  <div class="task-name-cell">
-                    <span class="task-id">{{task.id}}</span>
-                    <span class="task-name">{{task.name}}</span>
-                  </div>
-                </td>
-              </ng-container>
+            <mat-form-field appearance="outline">
+              <mat-label>Prioridad</mat-label>
+              <mat-select [value]="taskRepository.taskQuery().priority" (selectionChange)="taskRepository.updateQuery({ priority: $event.value })">
+                <mat-option value="all">Todas</mat-option>
+                <mat-option value="urgent">Urgente</mat-option>
+                <mat-option value="high">Alta</mat-option>
+                <mat-option value="medium">Media</mat-option>
+                <mat-option value="low">Baja</mat-option>
+              </mat-select>
+            </mat-form-field>
 
-              <!-- Assignee Column -->
-              <ng-container matColumnDef="assignee">
-                <th mat-header-cell *matHeaderCellDef> Responsable </th>
-                <td mat-cell *matCellDef="let task">
-                  <div class="assignee-cell">
-                    <img [src]="'https://ui-avatars.com/api/?name=' + task.assignee + '&background=ebecf0&color=172b4d&rounded=true'" class="mini-avatar">
-                    <span class="text-muted">{{task.assignee}}</span>
-                  </div>
-                </td>
-              </ng-container>
-
-              <!-- Priority Column -->
-              <ng-container matColumnDef="priority">
-                <th mat-header-cell *matHeaderCellDef> Prioridad </th>
-                <td mat-cell *matCellDef="let task">
-                  <span class="priority-chip"
-                        [class.priority-urgent]="task.priority === 'Urgente'"
-                        [class.priority-high]="task.priority === 'Alta'"
-                        [class.priority-medium]="task.priority === 'Media'"
-                        [class.priority-low]="task.priority === 'Baja'">
-                    <mat-icon *ngIf="task.priority === 'Urgente'" class="urgent-icon">local_fire_department</mat-icon>
-                    <mat-icon *ngIf="task.priority === 'Alta'" class="priority-icon">keyboard_double_arrow_up</mat-icon>
-                    <mat-icon *ngIf="task.priority === 'Media'" class="priority-icon">keyboard_arrow_up</mat-icon>
-                    <mat-icon *ngIf="task.priority === 'Baja'" class="priority-icon">keyboard_arrow_down</mat-icon>
-                    {{task.priority}}
-                  </span>
-                </td>
-              </ng-container>
-
-              <!-- Sprint Column -->
-              <ng-container matColumnDef="sprint">
-                <th mat-header-cell *matHeaderCellDef> Sprint </th>
-                <td mat-cell *matCellDef="let task" class="text-muted"> {{task.sprint}} </td>
-              </ng-container>
-
-              <!-- Date Column -->
-              <ng-container matColumnDef="date">
-                <th mat-header-cell *matHeaderCellDef> Fecha </th>
-                <td mat-cell *matCellDef="let task" class="text-muted"> {{task.date}} </td>
-              </ng-container>
-
-              <!-- Labels Column -->
-              <ng-container matColumnDef="labels">
-                <th mat-header-cell *matHeaderCellDef> Etiquetas </th>
-                <td mat-cell *matCellDef="let task">
-                  <div class="labels-container">
-                    <span *ngFor="let label of task.labels" class="label-chip">{{label}}</span>
-                  </div>
-                </td>
-              </ng-container>
-
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="task-row"></tr>
-            </table>
+            <mat-form-field appearance="outline">
+              <mat-label>Ordenar</mat-label>
+              <mat-select [value]="taskRepository.taskQuery().sortBy" (selectionChange)="taskRepository.updateQuery({ sortBy: $event.value })">
+                <mat-option value="dueDate">Fecha limite</mat-option>
+                <mat-option value="title">Nombre</mat-option>
+                <mat-option value="status">Estado</mat-option>
+                <mat-option value="priority">Prioridad</mat-option>
+                <mat-option value="progress">Progreso</mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
-        </div>
-      </ng-container>
 
-      <!-- PLACEHOLDER VIEWS -->
-      <ng-container *ngIf="currentView() !== 'inicio'">
-        <div class="placeholder-view">
+          @if (taskRepository.loading()) {
+            <div class="loading-state">
+              <mat-spinner diameter="32"></mat-spinner>
+              <span>Cargando tareas...</span>
+            </div>
+          } @else if (taskRepository.page().total === 0) {
+            <div class="empty-state">
+              <mat-icon>inventory_2</mat-icon>
+              <h2>No hay tareas para los filtros actuales</h2>
+              <p>Ajusta la busqueda o reintenta cuando el backend este disponible.</p>
+            </div>
+          } @else {
+            @if (activeTaskView() === 'list') {
+              <div class="table-wrapper">
+                <table mat-table [dataSource]="taskRepository.page().items" class="task-table">
+                  <ng-container matColumnDef="title">
+                    <th mat-header-cell *matHeaderCellDef> Tarea </th>
+                    <td mat-cell *matCellDef="let task">
+                      <button class="task-link" (click)="selectTask(task)">
+                        <span class="task-id">{{ task.id }}</span>
+                        <span>{{ task.title }}</span>
+                      </button>
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef> Estado </th>
+                    <td mat-cell *matCellDef="let task"><span class="status-chip" [class]="'status-' + task.status">{{ statusLabel(task.status) }}</span></td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="priority">
+                    <th mat-header-cell *matHeaderCellDef> Prioridad </th>
+                    <td mat-cell *matCellDef="let task"><span class="priority-chip" [class]="'priority-' + task.priority">{{ priorityLabel(task.priority) }}</span></td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="assignees">
+                    <th mat-header-cell *matHeaderCellDef> Responsable </th>
+                    <td mat-cell *matCellDef="let task">{{ task.assigneeIds.join(', ') || 'Sin asignar' }}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="startDate">
+                    <th mat-header-cell *matHeaderCellDef> Inicio </th>
+                    <td mat-cell *matCellDef="let task">{{ task.startDate | date:'dd/MM/yyyy' }}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="dueDate">
+                    <th mat-header-cell *matHeaderCellDef> Limite </th>
+                    <td mat-cell *matCellDef="let task" [class.overdue]="isOverdue(task)">{{ task.dueDate | date:'dd/MM/yyyy' }}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="progress">
+                    <th mat-header-cell *matHeaderCellDef> Progreso </th>
+                    <td mat-cell *matCellDef="let task"><mat-progress-bar mode="determinate" [value]="task.progress"></mat-progress-bar></td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="tags">
+                    <th mat-header-cell *matHeaderCellDef> Etiquetas </th>
+                    <td mat-cell *matCellDef="let task">
+                      <div class="labels-container">
+                        @for (tag of task.tags; track tag) {
+                          <span class="label-chip">{{ tag }}</span>
+                        }
+                      </div>
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                    <td mat-cell *matCellDef="let task">
+                      <button mat-icon-button (click)="selectTask(task)" matTooltip="Abrir detalle"><mat-icon>open_in_new</mat-icon></button>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="task-row"></tr>
+                </table>
+              </div>
+            }
+
+            @if (activeTaskView() === 'kanban') {
+              <div class="kanban-board">
+                @for (column of statusColumns; track column.id) {
+                  <section class="kanban-column" cdkDropList [id]="'kanban-' + column.id" [cdkDropListData]="taskByStatus(column.id)" [cdkDropListConnectedTo]="connectedDropLists()" (cdkDropListDropped)="onKanbanDrop($event, column.id)">
+                    <header>
+                      <h2>{{ column.label }}</h2>
+                      <span>{{ taskByStatus(column.id).length }}</span>
+                    </header>
+                    @for (task of taskByStatus(column.id); track task.id) {
+                      <article class="kanban-card" cdkDrag [cdkDragData]="task" (click)="selectTask(task)">
+                        <strong>{{ task.title }}</strong>
+                        <span class="priority-chip" [class]="'priority-' + task.priority">{{ priorityLabel(task.priority) }}</span>
+                        <small>{{ task.assigneeIds.join(', ') || 'Sin asignar' }} · {{ task.dueDate | date:'dd/MM' }}</small>
+                        <mat-progress-bar mode="determinate" [value]="task.progress"></mat-progress-bar>
+                      </article>
+                    }
+                  </section>
+                }
+              </div>
+            }
+
+            @if (activeTaskView() === 'calendar') {
+              <div class="calendar-toolbar">
+                <button mat-icon-button (click)="previousMonth()" matTooltip="Mes anterior"><mat-icon>chevron_left</mat-icon></button>
+                <strong>{{ calendarCursor() | date:'MMMM yyyy' }}</strong>
+                <button mat-icon-button (click)="nextMonth()" matTooltip="Mes siguiente"><mat-icon>chevron_right</mat-icon></button>
+              </div>
+              <div class="calendar-grid">
+                @for (day of monthlyDays(); track day.toISOString()) {
+                  <section class="calendar-day">
+                    <strong>{{ day | date:'d' }}</strong>
+                    @for (task of tasksForDay(day); track task.id) {
+                      <button class="calendar-task" (click)="selectTask(task)">{{ task.title }}</button>
+                    }
+                  </section>
+                }
+              </div>
+            }
+
+            @if (activeTaskView() === 'gantt') {
+              <div class="gantt-view">
+                <div class="gantt-scale">
+                  <span>Inicio</span>
+                  <span>Semana 2</span>
+                  <span>Semana 3</span>
+                  <span>Fin</span>
+                </div>
+                @for (task of taskRepository.filteredTasks(); track task.id) {
+                  <button class="gantt-row" (click)="selectTask(task)">
+                    <span>{{ task.title }}</span>
+                    <div class="gantt-track">
+                      <div class="gantt-bar" [style.margin-left.%]="ganttOffset(task)" [style.width.%]="ganttWidth(task)">
+                        <span [style.width.%]="task.progress"></span>
+                      </div>
+                    </div>
+                  </button>
+                }
+                <p class="text-muted">Cronograma temporal: pendiente evaluar libreria Gantt completa compatible con licencia y accesibilidad.</p>
+              </div>
+            }
+          }
+        </section>
+
+        <aside class="task-detail">
+          @if (taskRepository.selectedTask(); as task) {
+            <header>
+              <span class="task-id">{{ task.id }}</span>
+              <h2>{{ task.title }}</h2>
+              <p>{{ task.description }}</p>
+            </header>
+            <div class="detail-grid">
+              <span>Estado</span><strong>{{ statusLabel(task.status) }}</strong>
+              <span>Prioridad</span><strong>{{ priorityLabel(task.priority) }}</strong>
+              <span>Responsables</span><strong>{{ task.assigneeIds.join(', ') || 'Sin asignar' }}</strong>
+              <span>Fechas</span><strong>{{ task.startDate | date:'dd/MM/yyyy' }} - {{ task.dueDate | date:'dd/MM/yyyy' }}</strong>
+              <span>Progreso</span><strong>{{ task.progress }}%</strong>
+              <span>Auditoria</span><strong>v{{ task.version }} · {{ task.updatedAt | date:'short' }}</strong>
+            </div>
+            <mat-divider></mat-divider>
+            <section>
+              <h3>Subtareas</h3>
+              <p class="text-muted">{{ task.subtasks.length ? task.subtasks.length + ' subtareas' : 'Sin subtareas registradas.' }}</p>
+            </section>
+            <section>
+              <h3>Comentarios</h3>
+              @for (comment of task.comments; track comment.id) {
+                <article class="comment-box">
+                  <strong>{{ comment.authorName }}</strong>
+                  <time>{{ comment.createdAt | date:'short' }}</time>
+                  <p>{{ comment.content }}</p>
+                </article>
+              }
+            </section>
+            <section>
+              <h3>Adjuntos e historial</h3>
+              <p class="text-muted">{{ task.attachments.length }} adjuntos · {{ task.activity.length }} eventos</p>
+            </section>
+          }
+        </aside>
+      }
+
+      @if (currentView() === 'espacios' || currentView() === 'equipos' || currentView() === 'configuracion' || currentView() === 'notificaciones') {
+        <section class="placeholder-view">
+          <mat-icon class="placeholder-icon">{{ currentView() === 'equipos' ? 'group' : currentView() === 'notificaciones' ? 'notifications' : currentView() === 'configuracion' ? 'settings' : 'folder_copy' }}</mat-icon>
+          <h1>{{ currentView() }}</h1>
+          <p>Base arquitectonica contemplada para el MVP. La gestion avanzada queda para una iteracion posterior.</p>
+        </section>
+      }
+
+      @if (currentView() === 'documentos' || currentView() === 'paneles') {
+        <section class="placeholder-view">
           <mat-icon class="placeholder-icon">construction</mat-icon>
-          <h2>Vista de <span style="text-transform: capitalize;">{{currentView()}}</span> en construcción</h2>
-          <p class="text-muted">Esta sección de TaskHive estará disponible próximamente.</p>
-        </div>
-      </ng-container>
-
-    </div>
+          <h1>{{ currentView() }} proximamente</h1>
+          <p>Modulo visible solo como referencia de navegacion. No simula funcionalidad inexistente.</p>
+        </section>
+      }
+    </main>
   </mat-sidenav-content>
 </mat-sidenav-container>
 
-<!-- Sprint 3 IA Integration: FLOATING AI CHAT WIDGET -->
 <div class="ai-chat-widget">
   <div class="ai-chat-window" [class.open]="isChatOpen">
     <mat-card class="ai-chat-card">
@@ -264,21 +411,20 @@
         </button>
       </mat-card-header>
       <mat-card-content class="ai-chat-content">
-        
-        <!-- ZONA DE SCROLL CON HISTORIAL -->
         <div class="ai-chat-scroll-area">
-          <div *ngFor="let msg of historialChat" class="fade-in"
-               [ngClass]="msg.role === 'user' ? 'ai-msg-user' : (msg.role === 'error' ? 'ai-msg-error' : 'ai-msg-ai')">
-            <strong *ngIf="msg.role === 'user'">Tú:</strong>
-            <strong *ngIf="msg.role !== 'user'">Respuesta:</strong>
-            <p>{{ msg.content }}</p>
-          </div>
+          @for (msg of historialChat; track msg.content) {
+            <div class="fade-in" [ngClass]="msg.role === 'user' ? 'ai-msg-user' : (msg.role === 'error' ? 'ai-msg-error' : 'ai-msg-ai')">
+              <strong>{{ msg.role === 'user' ? 'Tu:' : 'Respuesta:' }}</strong>
+              <p>{{ msg.content }}</p>
+            </div>
+          }
 
-          <!-- Estado de carga -->
-          <div *ngIf="cargando" class="ai-loading-box">
-            <mat-spinner diameter="24"></mat-spinner>
-            <span>Pensando...</span>
-          </div>
+          @if (cargando) {
+            <div class="ai-loading-box">
+              <mat-spinner diameter="24"></mat-spinner>
+              <span>Pensando...</span>
+            </div>
+          }
         </div>
 
         <div class="ai-chat-input-area">

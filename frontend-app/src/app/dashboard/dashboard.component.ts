@@ -1,49 +1,84 @@
-import { Component, inject, signal, OnInit, ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
+import { CommonModule, DatePipe } from '@angular/common';
+import { ChangeDetectorRef, Component, OnInit, computed, inject, signal } from '@angular/core';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { AiService } from '../services/ai';
-
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { Router } from '@angular/router';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { PremiumDialogComponent } from '../dialogs/premium-dialog/premium-dialog.component';
+import { PermissionService } from '../core/permissions/permission.service';
+import { AiService } from '../services/ai';
 import { ThemeService } from '../theme.service';
+import { Task, TaskPriority, TaskStatus } from '../data-access/models/project-management.models';
+import { TaskRepository } from '../data-access/repositories/task.repository';
 
-export interface TaskItem {
-  id: string;
-  name: string;
-  status: string;
-  assignee: string;
-  priority: string;
-  sprint: string;
-  date: string;
-  labels: string[];
+interface NeonMessage {
+  remitente: string;
+  texto: string;
 }
 
-const TASK_DATA: TaskItem[] = [
-  { id: 'TH-142', name: 'Rediseño Arquitectura Cloud', status: 'En progreso', assignee: 'Alex', priority: 'Urgente', sprint: 'Sprint 42', date: 'Oct 15', labels: ['DevOps', 'Cloud'] },
-  { id: 'TH-143', name: 'Migración Base de Datos', status: 'En revisión', assignee: 'Sara', priority: 'Alta', sprint: 'Sprint 42', date: 'Oct 20', labels: ['Backend', 'DB'] },
-  { id: 'TH-144', name: 'Aplicación Móvil iOS', status: 'Backlog', assignee: 'David', priority: 'Media', sprint: 'Backlog', date: 'Nov 01', labels: ['Mobile', 'iOS'] },
-  { id: 'TH-145', name: 'Integración API ERP', status: 'Pendiente', assignee: 'Alex', priority: 'Alta', sprint: 'Sprint 42', date: 'Oct 25', labels: ['API'] },
-  { id: 'TH-146', name: 'Auditoría de Seguridad', status: 'Completada', assignee: 'Elena', priority: 'Baja', sprint: 'Sprint 40', date: 'Ago 10', labels: ['Security'] },
-  { id: 'TH-147', name: 'Fix bug en el login', status: 'Bloqueada', assignee: 'Sara', priority: 'Urgente', sprint: 'Sprint 42', date: 'Oct 12', labels: ['Bug', 'Frontend'] },
-  { id: 'TH-148', name: 'Diseñar nueva Landing', status: 'En progreso', assignee: 'David', priority: 'Media', sprint: 'Sprint 42', date: 'Oct 18', labels: ['Design'] },
+interface ChatMessage {
+  role: 'user' | 'ai' | 'error';
+  content: string;
+}
+
+interface NavigationItem {
+  id: DashboardView;
+  label: string;
+  icon: string;
+  comingSoon?: boolean;
+}
+
+type DashboardView =
+  | 'inicio'
+  | 'mi-trabajo'
+  | 'agenda'
+  | 'espacios'
+  | 'equipos'
+  | 'proyectos'
+  | 'tareas'
+  | 'notificaciones'
+  | 'configuracion'
+  | 'documentos'
+  | 'paneles';
+
+const STATUS_COLUMNS: { id: TaskStatus; label: string }[] = [
+  { id: 'backlog', label: 'Backlog' },
+  { id: 'todo', label: 'Pendiente' },
+  { id: 'in_progress', label: 'En progreso' },
+  { id: 'review', label: 'En revision' },
+  { id: 'blocked', label: 'Bloqueada' },
+  { id: 'done', label: 'Completada' }
+];
+
+const NAVIGATION: NavigationItem[] = [
+  { id: 'inicio', label: 'Inicio', icon: 'home' },
+  { id: 'mi-trabajo', label: 'Mi trabajo', icon: 'assignment_ind' },
+  { id: 'agenda', label: 'Agenda', icon: 'event' },
+  { id: 'espacios', label: 'Espacios', icon: 'folder_copy' },
+  { id: 'equipos', label: 'Equipos', icon: 'group' },
+  { id: 'proyectos', label: 'Proyectos', icon: 'work' },
+  { id: 'documentos', label: 'Documentos', icon: 'description', comingSoon: true },
+  { id: 'paneles', label: 'Paneles', icon: 'dashboard', comingSoon: true }
 ];
 
 @Component({
@@ -51,6 +86,10 @@ const TASK_DATA: TaskItem[] = [
   standalone: true,
   imports: [
     CommonModule,
+    DatePipe,
+    DragDropModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatToolbarModule,
     MatSidenavModule,
     MatCardModule,
@@ -65,52 +104,72 @@ const TASK_DATA: TaskItem[] = [
     MatBadgeModule,
     MatListModule,
     MatProgressBarModule,
-    FormsModule,
     MatInputModule,
-    MatProgressSpinnerModule
+    MatFormFieldModule,
+    MatProgressSpinnerModule,
+    MatSelectModule,
+    MatTabsModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  private router = inject(Router);
-  private dialog = inject(MatDialog);
-  public themeService = inject(ThemeService);
-  private http = inject(HttpClient);
+  private readonly router = inject(Router);
+  private readonly dialog = inject(MatDialog);
+  private readonly http = inject(HttpClient);
+  private readonly aiService = inject(AiService);
+  private readonly cdr = inject(ChangeDetectorRef);
+  readonly themeService = inject(ThemeService);
+  readonly taskRepository = inject(TaskRepository);
+  readonly permissions = inject(PermissionService);
 
-  isSidebarExpanded = signal(true);
-  currentView = signal<string>('inicio');
-  mensajes = signal<any[]>([]);
+  readonly navigation = NAVIGATION;
+  readonly statusColumns = STATUS_COLUMNS;
+  readonly displayedColumns = ['title', 'status', 'priority', 'assignees', 'startDate', 'dueDate', 'progress', 'tags', 'actions'];
+  readonly searchControl = new FormControl('', { nonNullable: true });
+  readonly isSidebarExpanded = signal(true);
+  readonly currentView = signal<DashboardView>('inicio');
+  readonly activeTaskView = signal<'list' | 'kanban' | 'calendar' | 'gantt'>('list');
+  readonly calendarCursor = signal(new Date(2026, 6, 1));
+  readonly mensajes = signal<NeonMessage[]>([]);
 
-  textoUsuario: string = '';
-  historialChat: { role: 'user' | 'ai' | 'error', content: string }[] = [];
-  cargando: boolean = false;
-  isChatOpen: boolean = false;
+  textoUsuario = '';
+  historialChat: ChatMessage[] = [];
+  cargando = false;
+  isChatOpen = false;
 
-  private aiService = inject(AiService);
-  private cdr = inject(ChangeDetectorRef);
+  readonly overdueTasks = computed(() => this.taskRepository.allTasks().filter(task => this.isOverdue(task)));
+  readonly monthlyDays = computed(() => this.buildCalendarMonth(this.calendarCursor()));
+  readonly connectedDropLists = computed(() => this.statusColumns.map(column => `kanban-${column.id}`));
 
-  displayedColumns = ['status', 'name', 'assignee', 'priority', 'sprint', 'date', 'labels'];
-  dataSource = signal<TaskItem[]>(TASK_DATA);
+  ngOnInit(): void {
+    this.taskRepository.loadTasks();
+    this.loadMessages();
 
-  ngOnInit() {
-    this.http.get<any[]>('http://localhost:8080/api/v1/mensajes')
-      .subscribe({
-        next: (data) => this.mensajes.set(data),
-        error: (err) => console.error('Error fetching messages', err)
-      });
+    this.searchControl.valueChanges.pipe(
+      debounceTime(250),
+      distinctUntilChanged()
+    ).subscribe(search => this.taskRepository.updateQuery({ search }));
   }
 
-  toggleSidebar() {
-    this.isSidebarExpanded.set(!this.isSidebarExpanded());
+  toggleSidebar(): void {
+    this.isSidebarExpanded.update(value => !value);
   }
 
-  toggleTheme() {
+  toggleTheme(): void {
     this.themeService.toggleTheme();
   }
 
-  changeView(view: string) {
+  changeView(view: DashboardView): void {
     this.currentView.set(view);
+    if (view === 'tareas' || view === 'proyectos') {
+      this.activeTaskView.set('list');
+    }
+  }
+
+  setTaskView(view: 'list' | 'kanban' | 'calendar' | 'gantt'): void {
+    this.currentView.set('tareas');
+    this.activeTaskView.set(view);
   }
 
   logout(): void {
@@ -128,29 +187,29 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  toggleChat() {
+  toggleChat(): void {
     this.isChatOpen = !this.isChatOpen;
   }
 
-  enviarPregunta() {
-    if(!this.textoUsuario.trim()) {
-      return; 
+  enviarPregunta(): void {
+    if (!this.textoUsuario.trim()) {
+      return;
     }
+
     const pregunta = this.textoUsuario.trim();
     this.historialChat.push({ role: 'user', content: pregunta });
-    this.textoUsuario = ''; 
-    this.cargando = true; 
+    this.textoUsuario = '';
+    this.cargando = true;
 
     this.aiService.consultarInteligenciaArtificial(pregunta).subscribe({
-      next: (res) => {
+      next: res => {
         this.historialChat.push({ role: 'ai', content: res.respuesta });
         this.cargando = false;
-        this.cdr.detectChanges(); 
+        this.cdr.detectChanges();
         this.scrollToBottom();
       },
-      error: (err) => {
-        console.error('Error al consultar la IA:', err);
-        this.historialChat.push({ role: 'error', content: 'Ocurrió un error al procesar tu solicitud con el cerebro.' });
+      error: () => {
+        this.historialChat.push({ role: 'error', content: 'Ocurrio un error al procesar tu solicitud con IA.' });
         this.cargando = false;
         this.cdr.detectChanges();
         this.scrollToBottom();
@@ -158,12 +217,102 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  scrollToBottom() {
+  scrollToBottom(): void {
     setTimeout(() => {
       const container = document.querySelector('.ai-chat-scroll-area');
       if (container) {
         container.scrollTop = container.scrollHeight;
       }
     }, 50);
+  }
+
+  taskByStatus(status: TaskStatus): Task[] {
+    return this.taskRepository.filteredTasks().filter(task => task.status === status);
+  }
+
+  onKanbanDrop(event: CdkDragDrop<Task[]>, status: TaskStatus): void {
+    const task = event.item.data as Task;
+    if (!this.permissions.has('task.update')) {
+      return;
+    }
+
+    this.taskRepository.changeTaskStatus(task.id, status);
+  }
+
+  selectTask(task: Task): void {
+    this.taskRepository.selectTask(task.id);
+  }
+
+  nextMonth(): void {
+    this.calendarCursor.update(date => new Date(date.getFullYear(), date.getMonth() + 1, 1));
+  }
+
+  previousMonth(): void {
+    this.calendarCursor.update(date => new Date(date.getFullYear(), date.getMonth() - 1, 1));
+  }
+
+  tasksForDay(day: Date): Task[] {
+    const isoDate = this.toDateKey(day);
+    return this.taskRepository.filteredTasks().filter(task => this.toDateKey(new Date(task.dueDate)) === isoDate || this.toDateKey(new Date(task.startDate)) === isoDate);
+  }
+
+  statusLabel(status: TaskStatus): string {
+    return STATUS_COLUMNS.find(column => column.id === status)?.label ?? status;
+  }
+
+  priorityLabel(priority: TaskPriority): string {
+    const labels: Record<TaskPriority, string> = {
+      low: 'Baja',
+      medium: 'Media',
+      high: 'Alta',
+      urgent: 'Urgente'
+    };
+
+    return labels[priority];
+  }
+
+  isOverdue(task: Task): boolean {
+    return task.status !== 'done' && new Date(task.dueDate).getTime() < Date.now();
+  }
+
+  ganttOffset(task: Task): number {
+    const start = new Date(task.startDate).getTime();
+    const monthStart = new Date(this.calendarCursor().getFullYear(), this.calendarCursor().getMonth(), 1).getTime();
+    const offsetDays = Math.max(0, Math.round((start - monthStart) / 86400000));
+    return Math.min(offsetDays * 3.2, 90);
+  }
+
+  ganttWidth(task: Task): number {
+    const start = new Date(task.startDate).getTime();
+    const end = new Date(task.dueDate).getTime();
+    const durationDays = Math.max(1, Math.round((end - start) / 86400000));
+    return Math.min(Math.max(durationDays * 3.2, 8), 100);
+  }
+
+  trackTask(_index: number, task: Task): string {
+    return task.id;
+  }
+
+  private loadMessages(): void {
+    this.http.get<NeonMessage[]>('http://localhost:8080/api/v1/mensajes').subscribe({
+      next: data => this.mensajes.set(data),
+      error: () => this.mensajes.set([])
+    });
+  }
+
+  private buildCalendarMonth(cursor: Date): Date[] {
+    const start = new Date(cursor.getFullYear(), cursor.getMonth(), 1);
+    const firstGridDay = new Date(start);
+    firstGridDay.setDate(start.getDate() - start.getDay());
+
+    return Array.from({ length: 42 }, (_, index) => {
+      const date = new Date(firstGridDay);
+      date.setDate(firstGridDay.getDate() + index);
+      return date;
+    });
+  }
+
+  private toDateKey(date: Date): string {
+    return date.toISOString().slice(0, 10);
   }
 }

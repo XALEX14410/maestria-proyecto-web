@@ -1,0 +1,200 @@
+.clay-surface {
+  background: var(--clay-surface-elevated);
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  border-radius: var(--clay-radius-lg);
+  box-shadow: var(--clay-shadow-md);
+  transition: transform var(--clay-transition-base), box-shadow var(--clay-transition-base), background var(--clay-transition-fast);
+}
+
+.clay-surface:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--clay-shadow-lg);
+}
+
+.clay-control {
+  background: var(--clay-surface-muted);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: var(--clay-radius-md);
+  box-shadow: var(--clay-shadow-sm);
+  transition: transform var(--clay-transition-fast), box-shadow var(--clay-transition-fast), background var(--clay-transition-fast);
+}
+
+.clay-control:hover {
+  transform: translateY(-1px);
+}
+
+.clay-control:active,
+.clay-pressed {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: var(--clay-shadow-inset);
+}
+
+.clay-inset {
+  background: var(--clay-surface-muted);
+  box-shadow: var(--clay-shadow-inset);
+}
+
+.clay-rise {
+  animation: clay-rise 320ms var(--clay-transition-bounce) both;
+}
+
+.clay-focus:focus-visible,
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 0;
+  box-shadow: var(--clay-focus-ring), var(--clay-shadow-sm);
+}
+
+.mat-mdc-raised-button,
+.mat-mdc-unelevated-button,
+.mat-mdc-fab,
+.mat-mdc-mini-fab {
+  border-radius: var(--clay-radius-md) !important;
+  transition: transform var(--clay-transition-fast), box-shadow var(--clay-transition-fast) !important;
+}
+
+.mat-mdc-fab,
+.mat-mdc-mini-fab {
+  box-shadow: var(--clay-shadow-md) !important;
+}
+
+.mat-mdc-fab:active,
+.mat-mdc-mini-fab:active,
+.mat-mdc-button-base:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  border-radius: var(--clay-radius-xl) !important;
+  box-shadow: var(--clay-shadow-lg) !important;
+}
+
+.ai-chat-widget {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 9999;
+}
+
+.ai-chat-window {
+  position: absolute;
+  right: 0;
+  bottom: 80px;
+  width: 350px;
+  max-width: calc(100vw - 48px);
+  transform: scale(0);
+  transform-origin: bottom right;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform var(--clay-transition-bounce), opacity var(--clay-transition-base);
+}
+
+.ai-chat-window.open {
+  transform: scale(1);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.ai-chat-fab.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ai-chat-card {
+  max-height: 90vh;
+  border-radius: var(--clay-radius-xl) !important;
+  box-shadow: var(--clay-shadow-lg) !important;
+}
+
+.ai-chat-card mat-card-header {
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--clay-primary);
+  color: white;
+}
+
+.close-chat-btn {
+  color: white;
+}
+
+.ai-chat-content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 260px;
+  max-height: calc(90vh - 64px);
+  background: var(--clay-surface-elevated);
+  color: var(--clay-text);
+}
+
+.ai-chat-scroll-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+}
+
+.ai-msg-user,
+.ai-msg-ai,
+.ai-msg-error {
+  padding: 10px;
+  border-radius: var(--clay-radius-md);
+}
+
+.ai-msg-user {
+  align-self: flex-end;
+  background: rgba(112, 87, 232, 0.12);
+}
+
+.ai-msg-ai {
+  align-self: flex-start;
+  background: var(--clay-surface-muted);
+}
+
+.ai-msg-error {
+  color: #b62d4b;
+  background: rgba(255, 143, 163, 0.18);
+}
+
+.ai-chat-input {
+  flex: 1;
+}
+
+.ai-send-btn {
+  transform: scale(0.82);
+}
+
+.cdk-drag-preview {
+  transform: rotate(1deg) scale(1.02);
+  box-shadow: var(--clay-shadow-lg);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0.35;
+}
+
+@keyframes clay-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -5,7 +5,7 @@
       <span class="logo-text">TaskHive</span>
     </div>
 
-    <div class="workspace-switcher" [class.compact]="!isSidebarExpanded()">
+    <div class="workspace-switcher clay-control" [class.compact]="!isSidebarExpanded()">
       <mat-icon>domain</mat-icon>
       <div>
         <span>Organizacion</span>
@@ -45,11 +45,11 @@
 
   <mat-sidenav-content class="main-content">
     <header class="topbar">
-      <button mat-icon-button (click)="toggleSidebar()" class="menu-btn text-muted" matTooltip="Contraer menu">
+      <button mat-icon-button (click)="toggleSidebar()" class="menu-btn text-muted clay-control" matTooltip="Contraer menu">
         <mat-icon>{{ isSidebarExpanded() ? 'menu_open' : 'menu' }}</mat-icon>
       </button>
 
-      <div class="search-container">
+      <div class="search-container clay-inset">
         <mat-icon class="search-icon">search</mat-icon>
         <input type="text" [formControl]="searchControl" placeholder="Buscar tareas, proyectos o etiquetas..." class="search-input">
       </div>
@@ -90,7 +90,7 @@
 
       @if (currentView() === 'inicio') {
         <section class="summary-grid">
-          <article class="widget-card">
+      <article class="widget-card clay-surface clay-rise">
             <div class="widget-header">
               <h3>Trabajo activo</h3>
               <mat-icon>task_alt</mat-icon>
@@ -99,7 +99,7 @@
             <span class="text-muted">tareas sincronizadas</span>
           </article>
 
-          <article class="widget-card">
+      <article class="widget-card clay-surface clay-rise">
             <div class="widget-header">
               <h3>Vencidas</h3>
               <mat-icon>warning</mat-icon>
@@ -108,7 +108,7 @@
             <span class="text-muted">requieren seguimiento</span>
           </article>
 
-          <article class="widget-card neon-messages-card">
+      <article class="widget-card neon-messages-card clay-surface clay-rise">
             <div class="widget-header">
               <h3>Datos Neon</h3>
               <mat-icon>cloud</mat-icon>
@@ -151,17 +151,17 @@
       }
 
       @if (currentView() === 'mi-trabajo' || currentView() === 'proyectos' || currentView() === 'tareas' || currentView() === 'agenda') {
-        <section class="task-shell">
+        <section class="task-shell clay-surface">
           <div class="section-header">
             <div>
               <h1>{{ currentView() === 'agenda' ? 'Agenda' : currentView() === 'mi-trabajo' ? 'Mi trabajo' : 'Proyectos' }}</h1>
               <p>Lista, tablero, calendario y cronograma comparten el mismo repositorio de tareas.</p>
             </div>
-            <div class="view-switcher" aria-label="Vistas de tareas">
-              <button mat-icon-button [class.active]="activeTaskView() === 'list'" (click)="setTaskView('list')" matTooltip="Lista"><mat-icon>view_list</mat-icon></button>
-              <button mat-icon-button [class.active]="activeTaskView() === 'kanban'" (click)="setTaskView('kanban')" matTooltip="Kanban"><mat-icon>view_kanban</mat-icon></button>
-              <button mat-icon-button [class.active]="activeTaskView() === 'calendar'" (click)="setTaskView('calendar')" matTooltip="Calendario"><mat-icon>calendar_month</mat-icon></button>
-              <button mat-icon-button [class.active]="activeTaskView() === 'gantt'" (click)="setTaskView('gantt')" matTooltip="Cronograma"><mat-icon>timeline</mat-icon></button>
+            <div class="view-switcher clay-control" aria-label="Vistas de tareas">
+              <button mat-icon-button [class.active]="activeTaskView() === 'list'" (click)="setTaskView('list')" matTooltip="Lista" class="clay-focus"><mat-icon>view_list</mat-icon></button>
+              <button mat-icon-button [class.active]="activeTaskView() === 'kanban'" (click)="setTaskView('kanban')" matTooltip="Kanban" class="clay-focus"><mat-icon>view_kanban</mat-icon></button>
+              <button mat-icon-button [class.active]="activeTaskView() === 'calendar'" (click)="setTaskView('calendar')" matTooltip="Calendario" class="clay-focus"><mat-icon>calendar_month</mat-icon></button>
+              <button mat-icon-button [class.active]="activeTaskView() === 'gantt'" (click)="setTaskView('gantt')" matTooltip="Cronograma preliminar" class="clay-focus"><mat-icon>timeline</mat-icon></button>
             </div>
           </div>
 
@@ -279,7 +279,7 @@
             }
 
             @if (activeTaskView() === 'kanban') {
-              <div class="kanban-board">
+              <div class="kanban-board clay-rise">
                 @for (column of statusColumns; track column.id) {
                   <section class="kanban-column" cdkDropList [id]="'kanban-' + column.id" [cdkDropListData]="taskByStatus(column.id)" [cdkDropListConnectedTo]="connectedDropLists()" (cdkDropListDropped)="onKanbanDrop($event, column.id)">
                     <header>
@@ -287,8 +287,9 @@
                       <span>{{ taskByStatus(column.id).length }}</span>
                     </header>
                     @for (task of taskByStatus(column.id); track task.id) {
-                      <article class="kanban-card" cdkDrag [cdkDragData]="task" (click)="selectTask(task)">
+                      <article class="kanban-card clay-surface" cdkDrag [cdkDragData]="task" [ngClass]="'priority-edge-' + task.priority" [class.selected]="taskRepository.selectedTask()?.id === task.id" (click)="selectTask(task)">
                         <strong>{{ task.title }}</strong>
+                        <span class="status-chip" [class]="'status-' + task.status">{{ statusLabel(task.status) }}</span>
                         <span class="priority-chip" [class]="'priority-' + task.priority">{{ priorityLabel(task.priority) }}</span>
                         <small>{{ task.assigneeIds.join(', ') || 'Sin asignar' }} · {{ task.dueDate | date:'dd/MM' }}</small>
                         <mat-progress-bar mode="determinate" [value]="task.progress"></mat-progress-bar>
@@ -300,17 +301,17 @@
             }
 
             @if (activeTaskView() === 'calendar') {
-              <div class="calendar-toolbar">
+              <div class="calendar-toolbar clay-control">
                 <button mat-icon-button (click)="previousMonth()" matTooltip="Mes anterior"><mat-icon>chevron_left</mat-icon></button>
                 <strong>{{ calendarCursor() | date:'MMMM yyyy' }}</strong>
                 <button mat-icon-button (click)="nextMonth()" matTooltip="Mes siguiente"><mat-icon>chevron_right</mat-icon></button>
               </div>
-              <div class="calendar-grid">
+              <div class="calendar-grid clay-rise">
                 @for (day of monthlyDays(); track day.toISOString()) {
                   <section class="calendar-day">
                     <strong>{{ day | date:'d' }}</strong>
                     @for (task of tasksForDay(day); track task.id) {
-                      <button class="calendar-task" (click)="selectTask(task)">{{ task.title }}</button>
+                      <button class="calendar-task clay-control" (click)="selectTask(task)">{{ task.title }}</button>
                     }
                   </section>
                 }
@@ -318,7 +319,7 @@
             }
 
             @if (activeTaskView() === 'gantt') {
-              <div class="gantt-view">
+              <div class="gantt-view clay-rise">
                 <div class="gantt-scale">
                   <span>Inicio</span>
                   <span>Semana 2</span>
@@ -335,18 +336,23 @@
                     </div>
                   </button>
                 }
-                <p class="text-muted">Cronograma temporal: pendiente evaluar libreria Gantt completa compatible con licencia y accesibilidad.</p>
+                <p class="text-muted">Cronograma preliminar: pendiente evaluar libreria Gantt completa compatible con licencia y accesibilidad.</p>
               </div>
             }
           }
         </section>
 
-        <aside class="task-detail">
+        <aside class="task-detail clay-surface clay-rise" [class.open]="taskRepository.selectedTask()">
           @if (taskRepository.selectedTask(); as task) {
             <header>
-              <span class="task-id">{{ task.id }}</span>
-              <h2>{{ task.title }}</h2>
-              <p>{{ task.description }}</p>
+              <div>
+                <span class="task-id">{{ task.id }}</span>
+                <h2>{{ task.title }}</h2>
+                <p>{{ task.description }}</p>
+              </div>
+              <button mat-icon-button (click)="closeTaskDetail()" class="clay-control" matTooltip="Cerrar detalle">
+                <mat-icon>close</mat-icon>
+              </button>
             </header>
             <div class="detail-grid">
               <span>Estado</span><strong>{{ statusLabel(task.status) }}</strong>

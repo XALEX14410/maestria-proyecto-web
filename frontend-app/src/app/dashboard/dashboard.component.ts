@@ -243,6 +243,10 @@ export class DashboardComponent implements OnInit {
     this.taskRepository.selectTask(task.id);
   }
 
+  closeTaskDetail(): void {
+    this.taskRepository.selectedTaskId.set(null);
+  }
+
   nextMonth(): void {
     this.calendarCursor.update(date => new Date(date.getFullYear(), date.getMonth() + 1, 1));
   }

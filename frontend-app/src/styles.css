@@ -3,5 +3,6 @@
 
 @import './styles/variables.css';
 @import './styles/themes.css';
+@import './styles/clay.css';
 @import './styles/reset.css';
 @import './styles/utilities.css';

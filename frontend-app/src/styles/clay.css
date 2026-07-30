@@ -427,7 +427,7 @@ textarea:focus-visible {
 .gantt-dependency {
   position: absolute;
   left: calc(-1px * var(--dependency-offset, 0));
-  top: 50%;
+  top: -7px;
   width: var(--dependency-offset, 0);
   border-top: 2px dashed var(--clay-accent-pink);
 }

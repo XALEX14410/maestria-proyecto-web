@@ -73,7 +73,7 @@
       </div>
     </header>
 
-    <main class="workspace-area fade-in">
+    <main class="workspace-area fade-in" [class.detail-open]="taskRepository.selectedTask()">
       <nav class="breadcrumbs" aria-label="Ruta">
         <span>TaskHive</span>
         <mat-icon>chevron_right</mat-icon>
@@ -364,8 +364,8 @@
           }
         </section>
 
-        <aside class="task-detail clay-surface clay-rise" [class.open]="taskRepository.selectedTask()">
-          @if (taskRepository.selectedTask(); as task) {
+        @if (taskRepository.selectedTask(); as task) {
+          <aside class="task-detail clay-surface clay-rise open">
             <header>
               <div>
                 <span class="task-id">{{ task.id }}</span>
@@ -403,8 +403,8 @@
               <h3>Adjuntos e historial</h3>
               <p class="text-muted">{{ task.attachments.length }} adjuntos · {{ task.activity.length }} eventos</p>
             </section>
-          }
-        </aside>
+          </aside>
+        }
       }
 
       @if (currentView() === 'espacios' || currentView() === 'equipos' || currentView() === 'configuracion' || currentView() === 'notificaciones') {

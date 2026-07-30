@@ -340,6 +340,14 @@ textarea:focus-visible {
   cursor: pointer;
 }
 
+.gantt-row > * {
+  grid-row: 1;
+}
+
+.gantt-task-name {
+  grid-column: 1;
+}
+
 .gantt-row:hover {
   background: rgba(112, 87, 232, 0.07);
 }

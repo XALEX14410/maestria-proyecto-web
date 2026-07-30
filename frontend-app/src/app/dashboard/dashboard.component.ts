@@ -281,7 +281,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ganttGridColumns(): string {
-    return `220px repeat(${this.ganttDays().length}, minmax(54px, 1fr))`;
+    return `minmax(220px, 0.75fr) repeat(${this.ganttDays().length}, minmax(56px, 1fr))`;
   }
 
   ganttBarGridColumn(task: Task): string {

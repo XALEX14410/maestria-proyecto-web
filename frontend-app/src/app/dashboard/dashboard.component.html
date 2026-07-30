@@ -154,7 +154,7 @@
         <section class="task-shell clay-surface">
           <div class="section-header">
             <div>
-              <h1>{{ currentView() === 'agenda' ? 'Agenda' : currentView() === 'mi-trabajo' ? 'Mi trabajo' : 'Proyectos' }}</h1>
+              <h1>{{ currentView() === 'agenda' ? 'Agenda' : currentView() === 'mi-trabajo' ? 'Mi trabajo' : currentView() === 'proyectos' ? 'Proyectos' : 'Tareas' }}</h1>
               <p>Lista, tablero, calendario y cronograma comparten el mismo repositorio de tareas.</p>
             </div>
             <div class="view-switcher clay-control" aria-label="Vistas de tareas">
@@ -281,7 +281,7 @@
             @if (activeTaskView() === 'kanban') {
               <div class="kanban-board clay-rise">
                 @for (column of statusColumns; track column.id) {
-                  <section class="kanban-column" cdkDropList [id]="'kanban-' + column.id" [cdkDropListData]="taskByStatus(column.id)" [cdkDropListConnectedTo]="connectedDropLists()" (cdkDropListDropped)="onKanbanDrop($event, column.id)">
+                  <section class="kanban-column" [ngClass]="'kanban-column-' + column.id" cdkDropList [id]="'kanban-' + column.id" [cdkDropListData]="taskByStatus(column.id)" [cdkDropListConnectedTo]="connectedDropLists()" (cdkDropListDropped)="onKanbanDrop($event, column.id)">
                     <header>
                       <h2>{{ column.label }}</h2>
                       <span>{{ taskByStatus(column.id).length }}</span>
@@ -320,23 +320,45 @@
 
             @if (activeTaskView() === 'gantt') {
               <div class="gantt-view clay-rise">
-                <div class="gantt-scale">
-                  <span>Inicio</span>
-                  <span>Semana 2</span>
-                  <span>Semana 3</span>
-                  <span>Fin</span>
+                <div class="gantt-grid gantt-header" [style.gridTemplateColumns]="ganttGridColumns()">
+                  <span>Tarea</span>
+                  @for (day of ganttDays(); track day.toISOString()) {
+                    <span [class.weekend]="day.getDay() === 0 || day.getDay() === 6">{{ day | date:'dd MMM' }}</span>
+                  }
                 </div>
                 @for (task of taskRepository.filteredTasks(); track task.id) {
-                  <button class="gantt-row" (click)="selectTask(task)">
-                    <span>{{ task.title }}</span>
-                    <div class="gantt-track">
-                      <div class="gantt-bar" [style.margin-left.%]="ganttOffset(task)" [style.width.%]="ganttWidth(task)">
-                        <span [style.width.%]="task.progress"></span>
-                      </div>
-                    </div>
+                  <button class="gantt-row gantt-grid" [style.gridTemplateColumns]="ganttGridColumns()" (click)="selectTask(task)">
+                    <span class="gantt-task-name">
+                      <strong>{{ task.title }}</strong>
+                      <small>{{ task.startDate | date:'dd/MM' }} - {{ task.dueDate | date:'dd/MM' }}</small>
+                    </span>
+                    @for (day of ganttDays(); track day.toISOString()) {
+                      <span class="gantt-cell" [class.weekend]="day.getDay() === 0 || day.getDay() === 6"></span>
+                    }
+                    <span class="gantt-bar" [ngClass]="'status-bar-' + task.status" [style.gridColumn]="ganttBarGridColumn(task)" [style.--dependency-offset.px]="ganttDependencyOffset(task)">
+                      <span class="gantt-progress" [style.width.%]="task.progress"></span>
+                      <span class="gantt-label">{{ task.progress }}%</span>
+                      @if (task.dependencies.length > 0) {
+                        <span class="gantt-dependency" matTooltip="Tiene dependencia registrada"></span>
+                      }
+                    </span>
+                    <span class="gantt-milestone" [style.gridColumn]="ganttBarGridColumn(task)" matTooltip="Fecha limite">
+                      <mat-icon>flag</mat-icon>
+                    </span>
                   </button>
+                } @empty {
+                  <div class="empty-state">
+                    <mat-icon>timeline</mat-icon>
+                    <h2>Sin tareas para calendarizar</h2>
+                    <p>Ajusta filtros o fechas para ver el cronograma.</p>
+                  </div>
                 }
-                <p class="text-muted">Cronograma preliminar: pendiente evaluar libreria Gantt completa compatible con licencia y accesibilidad.</p>
+                <div class="gantt-legend">
+                  @for (column of statusColumns; track column.id) {
+                    <span><i [class]="'status-bar-' + column.id"></i>{{ column.label }}</span>
+                  }
+                </div>
+                <p class="text-muted">Cronograma preliminar: representa fechas, duracion, avance y dependencias basicas; no reemplaza un motor Gantt completo.</p>
               </div>
             }
           }

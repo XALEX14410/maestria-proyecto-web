@@ -141,6 +141,7 @@ export class DashboardComponent implements OnInit {
   readonly overdueTasks = computed(() => this.taskRepository.allTasks().filter(task => this.isOverdue(task)));
   readonly monthlyDays = computed(() => this.buildCalendarMonth(this.calendarCursor()));
   readonly connectedDropLists = computed(() => this.statusColumns.map(column => `kanban-${column.id}`));
+  readonly ganttDays = computed(() => this.buildGanttDays(this.taskRepository.filteredTasks()));
 
   ngOnInit(): void {
     this.taskRepository.loadTasks();
@@ -279,18 +280,20 @@ export class DashboardComponent implements OnInit {
     return task.status !== 'done' && new Date(task.dueDate).getTime() < Date.now();
   }
 
-  ganttOffset(task: Task): number {
-    const start = new Date(task.startDate).getTime();
-    const monthStart = new Date(this.calendarCursor().getFullYear(), this.calendarCursor().getMonth(), 1).getTime();
-    const offsetDays = Math.max(0, Math.round((start - monthStart) / 86400000));
-    return Math.min(offsetDays * 3.2, 90);
+  ganttGridColumns(): string {
+    return `220px repeat(${this.ganttDays().length}, minmax(54px, 1fr))`;
   }
 
-  ganttWidth(task: Task): number {
-    const start = new Date(task.startDate).getTime();
-    const end = new Date(task.dueDate).getTime();
-    const durationDays = Math.max(1, Math.round((end - start) / 86400000));
-    return Math.min(Math.max(durationDays * 3.2, 8), 100);
+  ganttBarGridColumn(task: Task): string {
+    const firstDay = this.ganttDays()[0] ?? new Date(task.startDate);
+    const start = Math.max(0, this.daysBetween(firstDay, new Date(task.startDate)));
+    const span = Math.max(1, this.daysBetween(new Date(task.startDate), new Date(task.dueDate)) + 1);
+
+    return `${start + 2} / span ${span}`;
+  }
+
+  ganttDependencyOffset(task: Task): number {
+    return task.dependencies.length > 0 ? 24 : 0;
   }
 
   trackTask(_index: number, task: Task): string {
@@ -314,6 +317,34 @@ export class DashboardComponent implements OnInit {
       date.setDate(firstGridDay.getDate() + index);
       return date;
     });
+  }
+
+  private buildGanttDays(tasks: Task[]): Date[] {
+    if (tasks.length === 0) {
+      return [];
+    }
+
+    const starts = tasks.map(task => new Date(task.startDate).getTime());
+    const ends = tasks.map(task => new Date(task.dueDate).getTime());
+    const first = new Date(Math.min(...starts));
+    const last = new Date(Math.max(...ends));
+    first.setDate(first.getDate() - 1);
+    last.setDate(last.getDate() + 1);
+
+    const totalDays = Math.min(21, this.daysBetween(first, last) + 1);
+    return Array.from({ length: totalDays }, (_, index) => {
+      const date = new Date(first);
+      date.setDate(first.getDate() + index);
+      return date;
+    });
+  }
+
+  private daysBetween(start: Date, end: Date): number {
+    return Math.round((this.stripTime(end).getTime() - this.stripTime(start).getTime()) / 86400000);
+  }
+
+  private stripTime(date: Date): Date {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
   }
 
   private toDateKey(date: Date): string {

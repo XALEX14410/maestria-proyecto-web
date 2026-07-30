@@ -1,5 +1,5 @@
 <mat-sidenav-container class="workspace-container" autosize>
-  <mat-sidenav mode="side" opened class="sidebar" [class.collapsed]="!isSidebarExpanded()">
+  <mat-sidenav [mode]="isHandset() ? 'over' : 'side'" [opened]="!isHandset() || isSidebarExpanded()" class="sidebar" [class.collapsed]="!isSidebarExpanded() && !isHandset()">
     <div class="sidebar-header">
       <mat-icon class="logo-icon">rocket_launch</mat-icon>
       <span class="logo-text">TaskHive</span>
@@ -43,7 +43,7 @@
     </mat-nav-list>
   </mat-sidenav>
 
-  <mat-sidenav-content class="main-content">
+  <mat-sidenav-content class="content-shell">
     <header class="topbar">
       <button mat-icon-button (click)="toggleSidebar()" class="menu-btn text-muted clay-control" matTooltip="Contraer menu">
         <mat-icon>{{ isSidebarExpanded() ? 'menu_open' : 'menu' }}</mat-icon>
@@ -73,7 +73,7 @@
       </div>
     </header>
 
-    <main class="workspace-area fade-in" [class.detail-open]="taskRepository.selectedTask()">
+    <main class="main-content workspace-area fade-in" [class.detail-open]="taskRepository.selectedTask()">
       <nav class="breadcrumbs" aria-label="Ruta">
         <span>TaskHive</span>
         <mat-icon>chevron_right</mat-icon>

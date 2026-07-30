@@ -71,6 +71,31 @@ textarea:focus-visible {
   box-shadow: var(--clay-shadow-lg) !important;
 }
 
+mat-sidenav-container,
+mat-drawer-container {
+  height: 100dvh;
+  width: 100%;
+  min-height: 0;
+}
+
+mat-sidenav-content,
+mat-drawer-content {
+  min-width: 0;
+  min-height: 0;
+}
+
+.content-shell {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 .filters-row mat-form-field {
   --mdc-outlined-text-field-input-text-color: var(--clay-text);
   --mdc-outlined-text-field-label-text-color: var(--clay-text-muted);

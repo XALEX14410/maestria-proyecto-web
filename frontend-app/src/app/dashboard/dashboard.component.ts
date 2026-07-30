@@ -1,6 +1,8 @@
 import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { CommonModule, DatePipe } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit, computed, inject, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, computed, effect, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -23,7 +25,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs';
 import { PremiumDialogComponent } from '../dialogs/premium-dialog/premium-dialog.component';
 import { PermissionService } from '../core/permissions/permission.service';
 import { AiService } from '../services/ai';
@@ -119,6 +121,7 @@ export class DashboardComponent implements OnInit {
   private readonly http = inject(HttpClient);
   private readonly aiService = inject(AiService);
   private readonly cdr = inject(ChangeDetectorRef);
+  private readonly breakpointObserver = inject(BreakpointObserver);
   readonly themeService = inject(ThemeService);
   readonly taskRepository = inject(TaskRepository);
   readonly permissions = inject(PermissionService);
@@ -128,6 +131,10 @@ export class DashboardComponent implements OnInit {
   readonly displayedColumns = ['title', 'status', 'priority', 'assignees', 'startDate', 'dueDate', 'progress', 'tags', 'actions'];
   readonly searchControl = new FormControl('', { nonNullable: true });
   readonly isSidebarExpanded = signal(true);
+  readonly isHandset = toSignal(
+    this.breakpointObserver.observe('(max-width: 720px)').pipe(map(result => result.matches)),
+    { initialValue: false }
+  );
   readonly currentView = signal<DashboardView>('inicio');
   readonly activeTaskView = signal<'list' | 'kanban' | 'calendar' | 'gantt'>('list');
   readonly calendarCursor = signal(new Date(2026, 6, 1));
@@ -142,6 +149,14 @@ export class DashboardComponent implements OnInit {
   readonly monthlyDays = computed(() => this.buildCalendarMonth(this.calendarCursor()));
   readonly connectedDropLists = computed(() => this.statusColumns.map(column => `kanban-${column.id}`));
   readonly ganttDays = computed(() => this.buildGanttDays(this.taskRepository.filteredTasks()));
+
+  constructor() {
+    effect(() => {
+      if (this.isHandset()) {
+        this.isSidebarExpanded.set(false);
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.taskRepository.loadTasks();
@@ -165,6 +180,9 @@ export class DashboardComponent implements OnInit {
     this.currentView.set(view);
     if (view === 'tareas' || view === 'proyectos') {
       this.activeTaskView.set('list');
+    }
+    if (this.isHandset()) {
+      this.isSidebarExpanded.set(false);
     }
   }
 

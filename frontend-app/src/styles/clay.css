@@ -1,26 +1,32 @@
 .clay-surface {
   background: var(--clay-surface-elevated);
-  border: 1px solid rgba(255, 255, 255, 0.58);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
   border-radius: var(--clay-radius-lg);
   box-shadow: var(--clay-shadow-md);
-  transition: transform var(--clay-transition-base), box-shadow var(--clay-transition-base), background var(--clay-transition-fast);
+  transition: transform var(--clay-transition-base), box-shadow var(--clay-transition-base), background var(--clay-transition-fast), border-color var(--clay-transition-fast);
 }
 
 .clay-surface:hover {
   transform: translateY(-2px);
   box-shadow: var(--clay-shadow-lg);
+  border-color: var(--glass-border-light);
 }
 
 .clay-control {
   background: var(--clay-surface-muted);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border-light);
   border-radius: var(--clay-radius-md);
   box-shadow: var(--clay-shadow-sm);
   transition: transform var(--clay-transition-fast), box-shadow var(--clay-transition-fast), background var(--clay-transition-fast);
 }
 
 .clay-control:hover {
-  transform: translateY(-1px);
+  transform: translateY(-1px) scale(1.02);
+  background: var(--hover-bg);
 }
 
 .clay-control:active,
@@ -31,7 +37,10 @@
 
 .clay-inset {
   background: var(--clay-surface-muted);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   box-shadow: var(--clay-shadow-inset);
+  border: 1px solid var(--border-light);
 }
 
 .clay-rise {

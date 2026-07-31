@@ -1,18 +1,20 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+
+export interface AiConsultaResponse {
+  respuesta: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AiService {
-  // URL de nuestro Backend en Java
-  private apiUrl = 'http://localhost:8080/api/v1/ia/consulta';
-  
-  constructor(private http: HttpClient) {}
+  private readonly apiUrl = 'http://localhost:8080/api/v1/ia/consulta';
 
-  consultarInteligenciaArtificial(pregunta: string): Observable<any> {
-    // Enviamos la pregunta como parámetro de consulta (RequestParam)
-    return this.http.get<any>(`${this.apiUrl}?pregunta=${encodeURIComponent(pregunta)}`);
+  constructor(private readonly http: HttpClient) {}
+
+  consultarInteligenciaArtificial(pregunta: string): Observable<AiConsultaResponse> {
+    return this.http.get<AiConsultaResponse>(`${this.apiUrl}?pregunta=${encodeURIComponent(pregunta)}`);
   }
 }

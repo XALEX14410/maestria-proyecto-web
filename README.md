@@ -17,3 +17,15 @@ El desarrollo se encuentra integrando funcionalidades avanzadas de Inteligencia 
 * **Backend:** Java 21 + Spring Boot 3
 * **Base de Datos:** PostgreSQL
 * **Inteligencia Artificial:** Spring AI + Groq API (LLMs)
+
+## Autenticacion JWT - Sesion 7
+
+La practica implementa un login JWT con usuario simulado para desarrollo:
+
+* **Correo:** admin@univo.edu.mx
+* **Contrasena:** 12345
+* **Rol:** ADMIN
+
+El endpoint `POST /api/v1/auth/login` valida estas credenciales simuladas y devuelve un token JWT firmado con HS256. La llave se configura con `JWT_SECRET` o con el valor local de desarrollo definido en `backend-app/src/main/resources/application.properties`; no se deben guardar secretos reales en el repositorio.
+
+El guard de Angular protege la navegacion hacia `/dashboard`, pero no representa seguridad real del backend. Una siguiente iteracion debe integrar Spring Security, filtro JWT, validacion del token y proteccion de endpoints REST.

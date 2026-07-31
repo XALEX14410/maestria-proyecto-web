@@ -28,10 +28,12 @@ import { Router } from '@angular/router';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs';
 import { PremiumDialogComponent } from '../dialogs/premium-dialog/premium-dialog.component';
 import { PermissionService } from '../core/permissions/permission.service';
+import { AuthService } from '../core/services/auth.service';
 import { AiService } from '../services/ai';
 import { ThemeService } from '../theme.service';
 import { Task, TaskPriority, TaskStatus } from '../data-access/models/project-management.models';
 import { TaskRepository } from '../data-access/repositories/task.repository';
+import { environment } from '../../environments/environment';
 
 interface NeonMessage {
   remitente: string;
@@ -125,6 +127,7 @@ export class DashboardComponent implements OnInit {
   readonly themeService = inject(ThemeService);
   readonly taskRepository = inject(TaskRepository);
   readonly permissions = inject(PermissionService);
+  private readonly authService = inject(AuthService);
 
   readonly navigation = NAVIGATION;
   readonly statusColumns = STATUS_COLUMNS;
@@ -201,7 +204,7 @@ export class DashboardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'logout') {
-        this.router.navigate(['/login']);
+        this.authService.logout();
       }
     });
   }
@@ -319,7 +322,7 @@ export class DashboardComponent implements OnInit {
   }
 
   private loadMessages(): void {
-    this.http.get<NeonMessage[]>('http://localhost:8080/api/v1/mensajes').subscribe({
+    this.http.get<NeonMessage[]>(`${environment.apiBaseUrl}/api/v1/mensajes`).subscribe({
       next: data => this.mensajes.set(data),
       error: () => this.mensajes.set([])
     });

@@ -96,6 +96,25 @@ mat-drawer-content {
   overflow-y: auto;
 }
 
+.summary-grid,
+.quick-panels {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.summary-grid > article,
+.quick-panels > article {
+  grid-column: span 4;
+}
+
+@media (max-width: 860px) {
+  .summary-grid > article,
+  .quick-panels > article {
+    grid-column: span 12;
+  }
+}
+
 .filters-row mat-form-field {
   --mdc-outlined-text-field-input-text-color: var(--clay-text);
   --mdc-outlined-text-field-label-text-color: var(--clay-text-muted);

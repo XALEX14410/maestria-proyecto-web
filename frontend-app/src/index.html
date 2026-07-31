@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light" data-theme-preference="system">
 <head>
   <meta charset="utf-8">
   <title>TaskHive</title>
@@ -8,6 +8,21 @@
   <link rel="icon" type="image/jpeg" href="assets/icons/dark.jpg">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <script>
+    (function() {
+      try {
+        var key = 'taskhive-theme-preference';
+        var stored = localStorage.getItem(key);
+        var pref = stored === 'light' || stored === 'dark' ? stored : 'system';
+        var effective = pref;
+        if (pref === 'system') {
+          effective = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', effective);
+        document.documentElement.setAttribute('data-theme-preference', pref);
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
   <app-root>

@@ -1,0 +1,602 @@
+> Building...
+√ Building...
+Browser bundles     
+Initial chunk files  | Names               |  Raw size
+styles.css           | styles              | 112.64 kB | 
+main.js              | main                |   3.17 kB | 
+chunk-VUJOFXKG.js    | -                   | 938 bytes | 
+
+                     | Initial total       | 116.75 kB
+
+Lazy chunk files     | Names               |  Raw size
+chunk-LWVRHETM.js    | dashboard-component | 172.07 kB | 
+chunk-SREADUC7.js    | login-component     |  20.54 kB | 
+chunk-6VLGBJZZ.js    | -                   |   1.96 kB | 
+
+
+Server bundles      
+Initial chunk files  | Names               |  Raw size
+main.server.mjs      | main.server         |   4.43 kB | 
+server.mjs           | server              |   1.84 kB | 
+chunk-54EZUNS5.mjs   | -                   | 972 bytes | 
+polyfills.server.mjs | polyfills.server    | 268 bytes | 
+
+Lazy chunk files     | Names               |  Raw size
+chunk-A4M7VZFL.mjs   | dashboard-component | 172.10 kB | 
+chunk-DVK5RI2J.mjs   | login-component     |  20.58 kB | 
+chunk-2ICKELEJ.mjs   | -                   |   1.99 kB | 
+
+Application bundle generation complete. [2.520 seconds] - 2026-07-30T23:01:49.782Z
+
+Watch mode enabled. Watching for file changes...
+NOTE: Raw file sizes do not reflect development server per-request transformations.
+[2m5:01:50 p.m.[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m Re-optimizing dependencies because vite config has changed
+[2m5:01:50 p.m.[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m Re-optimizing dependencies because vite config has changed
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m4200[22m/[39m
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names  |  Raw size
+styles.css          | styles | 116.77 kB | 
+
+Application bundle generation complete. [0.020 seconds] - 2026-07-30T23:21:56.285Z
+
+Stylesheet update sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Browser bundles    
+Initial chunk files | Names               |  Raw size
+main.js             | main                |   3.17 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-JGTGOQCU.js   | dashboard-component | 174.55 kB | 
+
+
+Server bundles     
+Initial chunk files | Names               |  Raw size
+main.server.mjs     | main.server         |   4.43 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-PD73IBUE.mjs  | dashboard-component | 174.59 kB | 
+
+Application bundle generation complete. [0.661 seconds] - 2026-07-30T23:22:25.838Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Browser bundles    
+Initial chunk files | Names               |  Raw size
+main.js             | main                |   3.17 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-UGXV2C6Q.js   | dashboard-component | 174.55 kB | 
+
+
+Server bundles     
+Initial chunk files | Names               |  Raw size
+main.server.mjs     | main.server         |   4.43 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-CGI7PL72.mjs  | dashboard-component | 174.59 kB | 
+
+Application bundle generation complete. [0.565 seconds] - 2026-07-30T23:22:32.045Z
+
+Component update sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Browser bundles    
+Initial chunk files | Names               |  Raw size
+main.js             | main                |   3.17 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-6NQ6XZW5.js   | dashboard-component | 179.93 kB | 
+
+
+Server bundles     
+Initial chunk files | Names               |  Raw size
+main.server.mjs     | main.server         |   4.43 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-WZ4DHAPD.mjs  | dashboard-component | 179.97 kB | 
+
+Application bundle generation complete. [0.505 seconds] - 2026-07-30T23:23:56.120Z
+
+Component update sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Browser bundles    
+Initial chunk files | Names               |  Raw size
+main.js             | main                |   3.17 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-EBCDAIYZ.js   | dashboard-component | 179.53 kB | 
+
+
+Server bundles     
+Initial chunk files | Names               |  Raw size
+main.server.mjs     | main.server         |   4.43 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-3MMFOPQE.mjs  | dashboard-component | 179.57 kB | 
+
+Application bundle generation complete. [0.491 seconds] - 2026-07-30T23:25:22.664Z
+
+Component update sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Browser bundles    
+Initial chunk files | Names               |  Raw size
+styles.css          | styles              | 118.35 kB | 
+main.js             | main                |   3.17 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-TNZ3DYEH.js   | dashboard-component | 175.91 kB | 
+
+
+Server bundles     
+Initial chunk files | Names               |  Raw size
+main.server.mjs     | main.server         |   4.43 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-Q7YRAGM6.mjs  | dashboard-component | 175.95 kB | 
+
+Application bundle generation complete. [0.396 seconds] - 2026-07-30T23:25:53.818Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Browser bundles    
+Initial chunk files | Names               |  Raw size
+main.js             | main                |   3.17 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-ZKDMMTSB.js   | dashboard-component | 175.27 kB | 
+
+
+Server bundles     
+Initial chunk files | Names               |  Raw size
+main.server.mjs     | main.server         |   4.43 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-XR6VGI3A.mjs  | dashboard-component | 175.31 kB | 
+
+Application bundle generation complete. [0.476 seconds] - 2026-07-30T23:26:19.160Z
+
+Component update sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Browser bundles    
+Initial chunk files | Names               |  Raw size
+styles.css          | styles              | 118.49 kB | 
+main.js             | main                |   3.17 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-VW5MJ7U5.js   | dashboard-component | 174.52 kB | 
+
+
+Server bundles     
+Initial chunk files | Names               |  Raw size
+main.server.mjs     | main.server         |   4.43 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-4PV3XXI5.mjs  | dashboard-component | 174.56 kB | 
+
+Application bundle generation complete. [0.409 seconds] - 2026-07-30T23:26:42.261Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Browser bundles    
+Initial chunk files | Names               |  Raw size
+main.js             | main                |   3.17 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-OBZBIKRA.js   | dashboard-component | 182.73 kB | 
+
+
+Server bundles     
+Initial chunk files | Names               |  Raw size
+main.server.mjs     | main.server         |   4.43 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-BJDA554K.mjs  | dashboard-component | 182.76 kB | 
+
+Application bundle generation complete. [0.489 seconds] - 2026-07-30T23:32:21.922Z
+
+Component update sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names  |  Raw size
+styles.css          | styles | 119.21 kB | 
+
+Application bundle generation complete. [0.010 seconds] - 2026-07-30T23:32:29.129Z
+
+Stylesheet update sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Browser bundles    
+Initial chunk files | Names               |  Raw size
+styles.css          | styles              | 120.84 kB | 
+main.js             | main                |   3.17 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-E7C5BLXW.js   | dashboard-component | 175.69 kB | 
+
+
+Server bundles     
+Initial chunk files | Names               |  Raw size
+main.server.mjs     | main.server         |   4.43 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-ZWO4R3L2.mjs  | dashboard-component | 175.72 kB | 
+
+Application bundle generation complete. [0.393 seconds] - 2026-07-30T23:33:09.897Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Browser bundles    
+Initial chunk files | Names               |  Raw size
+styles.css          | styles              | 121.13 kB | 
+main.js             | main                |   3.17 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-SWH2OSIR.js   | dashboard-component | 174.97 kB | 
+
+
+Server bundles     
+Initial chunk files | Names               |  Raw size
+main.server.mjs     | main.server         |   4.43 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-XXPRIPRU.mjs  | dashboard-component | 175.01 kB | 
+
+Application bundle generation complete. [0.404 seconds] - 2026-07-30T23:33:41.528Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Application bundle generation failed. [0.285 seconds] - 2026-07-30T23:38:42.198Z
+
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Browser bundles     
+Initial chunk files  | Names               |  Raw size
+styles.css           | styles              | 121.13 kB | 
+main.js              | main                |   3.17 kB | 
+chunk-VUJOFXKG.js    | -                   | 938 bytes | 
+
+                     | Initial total       | 125.24 kB
+
+Lazy chunk files     | Names               |  Raw size
+chunk-2UAJCE6H.js    | dashboard-component | 182.15 kB | 
+chunk-SREADUC7.js    | login-component     |  20.54 kB | 
+chunk-6VLGBJZZ.js    | -                   |   1.96 kB | 
+
+
+Server bundles      
+Initial chunk files  | Names               |  Raw size
+main.server.mjs      | main.server         |   4.43 kB | 
+server.mjs           | server              |   1.84 kB | 
+chunk-54EZUNS5.mjs   | -                   | 972 bytes | 
+polyfills.server.mjs | polyfills.server    | 268 bytes | 
+
+Lazy chunk files     | Names               |  Raw size
+chunk-L2BE7QV5.mjs   | dashboard-component | 182.18 kB | 
+chunk-DVK5RI2J.mjs   | login-component     |  20.58 kB | 
+chunk-2ICKELEJ.mjs   | -                   |   1.99 kB | 
+
+Application bundle generation complete. [0.580 seconds] - 2026-07-30T23:38:53.260Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Browser bundles    
+Initial chunk files | Names               |  Raw size
+styles.css          | styles              | 124.61 kB | 
+main.js             | main                |   3.17 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-7H4CR6GN.js   | dashboard-component | 180.32 kB | 
+
+
+Server bundles     
+Initial chunk files | Names               |  Raw size
+main.server.mjs     | main.server         |   4.43 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-XZ4GHUYT.mjs  | dashboard-component | 180.35 kB | 
+
+Application bundle generation complete. [0.489 seconds] - 2026-07-30T23:39:52.204Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Browser bundles    
+Initial chunk files | Names               |  Raw size
+main.js             | main                |   3.17 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-KOWYXX3W.js   | dashboard-component | 180.44 kB | 
+
+
+Server bundles     
+Initial chunk files | Names               |  Raw size
+main.server.mjs     | main.server         |   4.43 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-EFJ5EK7H.mjs  | dashboard-component | 180.47 kB | 
+
+Application bundle generation complete. [0.468 seconds] - 2026-07-30T23:40:04.869Z
+
+Component update sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Browser bundles    
+Initial chunk files | Names               |  Raw size
+styles.css          | styles              | 124.68 kB | 
+main.js             | main                |   3.17 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-EUOBWR2N.js   | dashboard-component | 181.47 kB | 
+
+
+Server bundles     
+Initial chunk files | Names               |  Raw size
+main.server.mjs     | main.server         |   4.43 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-SLTP5GZS.mjs  | dashboard-component | 181.51 kB | 
+
+Application bundle generation complete. [0.552 seconds] - 2026-07-30T23:43:20.291Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Browser bundles    
+Initial chunk files | Names               |  Raw size
+styles.css          | styles              | 124.68 kB | 
+main.js             | main                |   3.17 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-J7ORNRUF.js   | dashboard-component | 182.38 kB | 
+
+
+Server bundles     
+Initial chunk files | Names               |  Raw size
+main.server.mjs     | main.server         |   4.43 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-SMC7PUOQ.mjs  | dashboard-component | 182.41 kB | 
+
+Application bundle generation complete. [0.514 seconds] - 2026-07-30T23:50:42.868Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Browser bundles    
+Initial chunk files | Names               |  Raw size
+styles.css          | styles              | 124.99 kB | 
+main.js             | main                |   3.17 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-UAEDIMHR.js   | dashboard-component | 182.92 kB | 
+
+
+Server bundles     
+Initial chunk files | Names               |  Raw size
+main.server.mjs     | main.server         |   4.43 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-GR4QTBFJ.mjs  | dashboard-component | 182.95 kB | 
+
+Application bundle generation complete. [0.568 seconds] - 2026-07-30T23:55:16.945Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Browser bundles    
+Initial chunk files | Names               |  Raw size
+main.js             | main                |   3.17 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-RR52TBLT.js   | dashboard-component | 183.97 kB | 
+
+
+Server bundles     
+Initial chunk files | Names               |  Raw size
+main.server.mjs     | main.server         |   4.43 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-H2SV22L3.mjs  | dashboard-component | 184.01 kB | 
+
+Application bundle generation complete. [0.637 seconds] - 2026-07-30T23:55:40.728Z
+
+Page reload sent to client(s).
+[2m5:55:43 p.m.[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32m✨ new dependencies optimized: [33m@angular/cdk/layout, @angular/core/rxjs-interop[32m[39m
+[2m5:55:43 p.m.[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32m✨ optimized dependencies changed. reloading[39m
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Browser bundles    
+Initial chunk files | Names               |  Raw size
+main.js             | main                |   3.17 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-CT5PM3XU.js   | dashboard-component | 184.05 kB | 
+
+
+Server bundles     
+Initial chunk files | Names               |  Raw size
+main.server.mjs     | main.server         |   4.43 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-KRG5EWWC.mjs  | dashboard-component | 184.09 kB | 
+
+Application bundle generation complete. [0.580 seconds] - 2026-07-30T23:55:47.542Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Browser bundles    
+Initial chunk files | Names               |  Raw size
+styles.css          | styles              | 125.21 kB | 
+main.js             | main                |   3.17 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-W4N6IOIA.js   | dashboard-component | 183.48 kB | 
+
+
+Server bundles     
+Initial chunk files | Names               |  Raw size
+main.server.mjs     | main.server         |   4.43 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-IXYSZ7V6.mjs  | dashboard-component | 183.51 kB | 
+
+Application bundle generation complete. [0.447 seconds] - 2026-07-30T23:56:16.654Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Browser bundles    
+Initial chunk files | Names               |  Raw size
+main.js             | main                |   3.17 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-LJ3E55LG.js   | dashboard-component | 183.37 kB | 
+
+
+Server bundles     
+Initial chunk files | Names               |  Raw size
+main.server.mjs     | main.server         |   4.43 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-OGM5XXRA.mjs  | dashboard-component | 183.41 kB | 
+
+Application bundle generation complete. [0.593 seconds] - 2026-07-30T23:56:40.584Z
+
+Component update sent to client(s).
+[2m5:59:21 p.m.[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32m✨ new dependencies optimized: [33m@angular/cdk/layout, @angular/core/rxjs-interop[32m[39m
+[2m5:59:21 p.m.[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32m✨ optimized dependencies changed. reloading[39m
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Browser bundles    
+Initial chunk files | Names               |  Raw size
+main.js             | main                |   3.17 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-3CZTWXXT.js   | dashboard-component | 184.01 kB | 
+
+
+Server bundles     
+Initial chunk files | Names               |  Raw size
+main.server.mjs     | main.server         |   4.43 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-X3A54IS6.mjs  | dashboard-component | 184.05 kB | 
+
+Application bundle generation complete. [0.544 seconds] - 2026-07-31T00:01:44.304Z
+
+Component update sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Browser bundles    
+Initial chunk files | Names               |  Raw size
+main.js             | main                |   3.17 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-E7NXAYM2.js   | dashboard-component | 183.96 kB | 
+
+
+Server bundles     
+Initial chunk files | Names               |  Raw size
+main.server.mjs     | main.server         |   4.43 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-OBV4Y553.mjs  | dashboard-component | 184.00 kB | 
+
+Application bundle generation complete. [0.568 seconds] - 2026-07-31T00:02:03.165Z
+
+Component update sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Browser bundles    
+Initial chunk files | Names               |  Raw size
+main.js             | main                |   3.17 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-A66FWXLT.js   | dashboard-component | 183.92 kB | 
+
+
+Server bundles     
+Initial chunk files | Names               |  Raw size
+main.server.mjs     | main.server         |   4.43 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-AZRPT52R.mjs  | dashboard-component | 183.96 kB | 
+
+Application bundle generation complete. [0.516 seconds] - 2026-07-31T00:02:32.991Z
+
+Component update sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Browser bundles    
+Initial chunk files | Names               |  Raw size
+styles.css          | styles              | 125.52 kB | 
+main.js             | main                |   3.17 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-A4AG6PRS.js   | dashboard-component | 183.08 kB | 
+
+
+Server bundles     
+Initial chunk files | Names               |  Raw size
+main.server.mjs     | main.server         |   4.43 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-XEEJVORL.mjs  | dashboard-component | 183.11 kB | 
+
+Application bundle generation complete. [0.440 seconds] - 2026-07-31T00:02:52.452Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Browser bundles    
+Initial chunk files | Names               |  Raw size
+styles.css          | styles              | 125.51 kB | 
+main.js             | main                |   3.17 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-3ECXYUIG.js   | dashboard-component | 183.31 kB | 
+
+
+Server bundles     
+Initial chunk files | Names               |  Raw size
+main.server.mjs     | main.server         |   4.43 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-5MSGTR46.mjs  | dashboard-component | 183.34 kB | 
+
+Application bundle generation complete. [0.710 seconds] - 2026-07-31T00:11:09.770Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Browser bundles    
+Initial chunk files | Names               |  Raw size
+styles.css          | styles              | 125.64 kB | 
+main.js             | main                |   3.17 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-HEDKNWWJ.js   | dashboard-component | 183.38 kB | 
+
+
+Server bundles     
+Initial chunk files | Names               |  Raw size
+main.server.mjs     | main.server         |   4.43 kB | 
+
+Lazy chunk files    | Names               |  Raw size
+chunk-ZUIBEVUN.mjs  | dashboard-component | 183.42 kB | 
+
+Application bundle generation complete. [0.473 seconds] - 2026-07-31T00:12:47.670Z
+
+Page reload sent to client(s).

@@ -1,0 +1,256 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------------< com.univo:backend-app >------------------------
+[INFO] Building  0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.3.0:run (default-cli) > test-compile @ backend-app >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ backend-app ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ backend-app ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ backend-app ---
+[INFO] skip non existing resourceDirectory C:\Dev\Desarrollo de Aplicaciones para Internet\backend-app\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ backend-app ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 3 source files with javac [debug parameters release 21] to target\test-classes
+[INFO] 
+[INFO] <<< spring-boot:3.3.0:run (default-cli) < test-compile @ backend-app <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.3.0:run (default-cli) @ backend-app ---
+[INFO] Attaching agents: []
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.0)
+
+2026-07-30T18:57:29.561-06:00  INFO 41412 --- [backend-app] [           main] c.u.backend_app.BackendAppApplication    : Starting BackendAppApplication using Java 26.0.1 with PID 41412 (C:\Dev\Desarrollo de Aplicaciones para Internet\backend-app\target\classes started by jesal in C:\Dev\Desarrollo de Aplicaciones para Internet\backend-app)
+2026-07-30T18:57:29.563-06:00  INFO 41412 --- [backend-app] [           main] c.u.backend_app.BackendAppApplication    : No active profile set, falling back to 1 default profile: "default"
+2026-07-30T18:57:30.027-06:00  INFO 41412 --- [backend-app] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-30T18:57:30.108-06:00  INFO 41412 --- [backend-app] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 74 ms. Found 2 JPA repository interfaces.
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.apache.tomcat.jni.Library in an unnamed module (file:/C:/Users/jesal/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.24/tomcat-embed-core-10.1.24.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+2026-07-30T18:57:30.392-06:00  INFO 41412 --- [backend-app] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-07-30T18:57:30.399-06:00  INFO 41412 --- [backend-app] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-30T18:57:30.404-06:00  INFO 41412 --- [backend-app] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-30T18:57:30.443-06:00  INFO 41412 --- [backend-app] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-07-30T18:57:30.444-06:00  INFO 41412 --- [backend-app] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 763 ms
+2026-07-30T18:57:30.526-06:00  INFO 41412 --- [backend-app] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-30T18:57:30.554-06:00  INFO 41412 --- [backend-app] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2026-07-30T18:57:30.574-06:00  INFO 41412 --- [backend-app] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-07-30T18:57:30.739-06:00  INFO 41412 --- [backend-app] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-30T18:57:30.754-06:00  INFO 41412 --- [backend-app] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-07-30T18:57:31.770-06:00  INFO 41412 --- [backend-app] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@192f5f39
+2026-07-30T18:57:31.771-06:00  INFO 41412 --- [backend-app] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-07-30T18:57:31.876-06:00  WARN 41412 --- [backend-app] [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-30T18:57:32.481-06:00  INFO 41412 --- [backend-app] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-30T18:57:32.769-06:00  INFO 41412 --- [backend-app] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-30T18:57:33.165-06:00  WARN 41412 --- [backend-app] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-30T18:57:33.338-06:00  INFO 41412 --- [backend-app] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-07-30T18:57:33.344-06:00  INFO 41412 --- [backend-app] [           main] c.u.backend_app.BackendAppApplication    : Started BackendAppApplication in 4.004 seconds (process running for 4.201)
+Hibernate: select u1_0.id from usuarios u1_0 where u1_0.email=? fetch first ? rows only
+2026-07-30T18:57:44.108-06:00  INFO 41412 --- [backend-app] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-30T18:57:44.109-06:00  INFO 41412 --- [backend-app] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-30T18:57:44.109-06:00  INFO 41412 --- [backend-app] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+Hibernate: select u1_0.id,u1_0.email,u1_0.nombre,u1_0.password from usuarios u1_0 where u1_0.email=?
+Hibernate: select u1_0.id,u1_0.email,u1_0.nombre,u1_0.password from usuarios u1_0 where u1_0.email=?
+Hibernate: select u1_0.id,u1_0.email,u1_0.nombre,u1_0.password from usuarios u1_0 where u1_0.email=?
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+2026-07-30T19:52:02.873-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-4] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@6d2a0806 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-30T19:52:02.884-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-4] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@2df2e600 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-30T19:52:02.886-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-4] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@6f4c8089 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-30T19:52:02.886-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-4] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@529bdf5e (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-30T19:52:02.887-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-4] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@18adc38c (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-30T19:52:02.887-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-4] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@2255e47f (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-30T19:52:02.888-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-4] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@29166074 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-30T19:52:02.888-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-4] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@257b2b27 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-30T19:52:02.890-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-4] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@53bc3da7 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-30T19:52:02.891-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-4] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@5e475db3 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+2026-07-30T20:18:24.700-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-8] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@182e6f81 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-30T20:18:24.702-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-8] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@eba3ffa (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-30T20:18:24.703-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-8] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@5cf9660c (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-30T20:18:24.704-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-8] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@37405875 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-30T20:18:24.704-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-8] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@52112e70 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-30T20:18:24.704-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-8] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@d8b8e27 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-30T20:18:24.705-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-8] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@1ad5509c (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-30T20:18:24.706-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-8] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@2fe32043 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-30T20:18:24.706-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-8] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@745af961 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-30T20:18:24.706-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-8] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@2571bb7b (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+2026-07-30T20:41:45.596-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-8] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@124f0409 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-30T20:41:45.599-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-8] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@2dbdc518 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-30T20:41:45.600-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-8] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@2912be38 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-30T20:41:45.601-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-8] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@4397985f (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-30T20:41:45.603-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-8] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@5933ef3d (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-30T20:41:45.604-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-8] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@1a656406 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-30T20:41:45.606-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-8] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@263afa0c (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-30T20:41:45.607-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-8] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@5910dbf4 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-30T20:41:45.607-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-8] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@1f1c8dec (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-30T20:41:45.609-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-8] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@2e688f5d (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0

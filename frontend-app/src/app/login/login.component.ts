@@ -6,11 +6,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+<<<<<<< HEAD
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs';
+=======
+>>>>>>> parent of eb0c42c (Merge pull request #8 from XALEX14410/feature/clickup-core-mvp)
 
 import { AuthService, LoginRequest } from '../core/services/auth.service';
 import { ThemeService } from '../theme.service';
@@ -25,9 +28,13 @@ import { ThemeService } from '../theme.service';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+<<<<<<< HEAD
     MatIconModule,
     MatTooltipModule,
     MatSnackBarModule
+=======
+    MatIconModule
+>>>>>>> parent of eb0c42c (Merge pull request #8 from XALEX14410/feature/clickup-core-mvp)
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']

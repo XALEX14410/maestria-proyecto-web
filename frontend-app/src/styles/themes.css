@@ -1,24 +1,15 @@
 .dark-theme {
+  /* Dark Theme Variables */
   --primary: #7b86e8;
   --primary-hover: #9ca4f0;
-  --bg-main: #1d1930;
-  --bg-sidebar: #28223e;
-  --bg-card: #28223e;
-  --border-color: rgba(168, 153, 255, 0.24);
-  --text-main: #f4f0ff;
-  --text-muted: #b6aecb;
+  --bg-main: #121212;
+  --bg-sidebar: #1e1e1e;
+  --bg-card: #1e1e1e;
+  --border-color: #333333;
+  --text-main: #e0e0e0;
+  --text-muted: #a0a0a0;
   --text-inverse: #121212;
-  --hover-bg: rgba(168, 153, 255, 0.12);
+  --hover-bg: #2d2d2d;
   --shadow-color: rgba(0, 0, 0, 0.5);
   --shadow-color-hover: rgba(123, 134, 232, 0.4);
-
-  --clay-surface: #1d1930;
-  --clay-surface-elevated: #28223e;
-  --clay-surface-muted: #332b4c;
-  --clay-text: #f4f0ff;
-  --clay-text-muted: #b6aecb;
-  --clay-shadow-sm: 6px 6px 14px rgba(0, 0, 0, 0.24), -4px -4px 10px rgba(255, 255, 255, 0.04);
-  --clay-shadow-md: 10px 12px 24px rgba(0, 0, 0, 0.28), -8px -8px 18px rgba(255, 255, 255, 0.05);
-  --clay-shadow-lg: 16px 20px 40px rgba(0, 0, 0, 0.34), -12px -12px 24px rgba(255, 255, 255, 0.06);
-  --clay-shadow-inset: inset 4px 4px 10px rgba(0, 0, 0, 0.24), inset -4px -4px 10px rgba(255, 255, 255, 0.05);
 }

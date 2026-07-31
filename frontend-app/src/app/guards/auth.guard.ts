@@ -13,7 +13,6 @@ export const authGuard: CanActivateFn = (_route, state) => {
     return true;
   }
 
-  // El guard protege navegacion frontend; la seguridad real debe validarse en el backend.
   if (authService.isAuthenticated()) {
     return true;
   }

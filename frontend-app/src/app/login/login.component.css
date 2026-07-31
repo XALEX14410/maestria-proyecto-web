@@ -88,6 +88,13 @@
   box-shadow: 0 6px 16px var(--shadow-color-hover);
 }
 
+.login-error {
+  color: #d32f2f;
+  font-size: 0.9rem;
+  margin: 0.75rem 0 0;
+  text-align: center;
+}
+
 @keyframes slideUpFade {
   from {
     opacity: 0;

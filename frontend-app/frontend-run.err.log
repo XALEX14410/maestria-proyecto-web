@@ -1,0 +1,135 @@
+npm notice run frontend-app@0.0.0 start
+npm notice run ng serve --host localhost --port 4200
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DatePipe is not used within the template of DashboardComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/dashboard/dashboard.component.ts:89:4:
+[37m      89 │     [32mDatePipe[37m,
+         ╵     [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Unexpected closing tag "div". It may happen when the tag has already been closed by another tag. For more info see https://www.w3.org/TR/html5/syntax.html#closing-elements-that-have-implied-end-tags[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/dashboard/dashboard.component.html:364:22:
+[37m      364 │                       [32m</div>[37m
+          ╵                       [32m~~~~~~[0m
+
+  Error occurs in the template of component DashboardComponent.
+
+    src/app/dashboard/dashboard.component.ts:113:15:
+[37m      113 │   templateUrl: [32m'./dashboard.component.html'[37m,
+          ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Unexpected closing tag "div". It may happen when the tag has already been closed by another tag. For more info see https://www.w3.org/TR/html5/syntax.html#closing-elements-that-have-implied-end-tags[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/dashboard/dashboard.component.html:365:20:
+[37m      365 │                     [32m</div>[37m
+          ╵                     [32m~~~~~~[0m
+
+  Error occurs in the template of component DashboardComponent.
+
+    src/app/dashboard/dashboard.component.ts:113:15:
+[37m      113 │   templateUrl: [32m'./dashboard.component.html'[37m,
+          ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Unexpected closing tag "button". It may happen when the tag has already been closed by another tag. For more info see https://www.w3.org/TR/html5/syntax.html#closing-elements-that-have-implied-end-tags[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/dashboard/dashboard.component.html:366:18:
+[37m      366 │                   [32m</button>[37m
+          ╵                   [32m~~~~~~~~~[0m
+
+  Error occurs in the template of component DashboardComponent.
+
+    src/app/dashboard/dashboard.component.ts:113:15:
+[37m      113 │   templateUrl: [32m'./dashboard.component.html'[37m,
+          ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Unexpected closing tag "div". It may happen when the tag has already been closed by another tag. For more info see https://www.w3.org/TR/html5/syntax.html#closing-elements-that-have-implied-end-tags[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/dashboard/dashboard.component.html:369:14:
+[37m      369 │               [32m</div>[37m
+          ╵               [32m~~~~~~[0m
+
+  Error occurs in the template of component DashboardComponent.
+
+    src/app/dashboard/dashboard.component.ts:113:15:
+[37m      113 │   templateUrl: [32m'./dashboard.component.html'[37m,
+          ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Unexpected closing block. The block may have been closed earlier. Did you forget to close the <section> element? If you meant to write the `}` character, you should use the "&#125;" HTML entity instead.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/dashboard/dashboard.component.html:370:12:
+[37m      370 │             [32m}[37m
+          ╵             [32m^[0m
+
+  Error occurs in the template of component DashboardComponent.
+
+    src/app/dashboard/dashboard.component.ts:113:15:
+[37m      113 │   templateUrl: [32m'./dashboard.component.html'[37m,
+          ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Unexpected closing block. The block may have been closed earlier. If you meant to write the `}` character, you should use the "&#125;" HTML entity instead.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/dashboard/dashboard.component.html:371:10:
+[37m      371 │           [32m}[37m
+          ╵           [32m^[0m
+
+  Error occurs in the template of component DashboardComponent.
+
+    src/app/dashboard/dashboard.component.ts:113:15:
+[37m      113 │   templateUrl: [32m'./dashboard.component.html'[37m,
+          ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Unexpected closing tag "section". It may happen when the tag has already been closed by another tag. For more info see https://www.w3.org/TR/html5/syntax.html#closing-elements-that-have-implied-end-tags[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/dashboard/dashboard.component.html:372:8:
+[37m      372 │         [32m</section>[37m
+          ╵         [32m~~~~~~~~~~[0m
+
+  Error occurs in the template of component DashboardComponent.
+
+    src/app/dashboard/dashboard.component.ts:113:15:
+[37m      113 │   templateUrl: [32m'./dashboard.component.html'[37m,
+          ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Unexpected closing block. The block may have been closed earlier. If you meant to write the `}` character, you should use the "&#125;" HTML entity instead.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/dashboard/dashboard.component.html:415:6:
+[37m      415 │       [32m}[37m
+          ╵       [32m^[0m
+
+  Error occurs in the template of component DashboardComponent.
+
+    src/app/dashboard/dashboard.component.ts:113:15:
+[37m      113 │   templateUrl: [32m'./dashboard.component.html'[37m,
+          ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+ERROR Error: There is a new version of the pre-bundle for "C:/Dev/Desarrollo de Aplicaciones para Internet/frontend-app/.angular/cache/22.0.6/frontend-app/vite/deps_ssr/@angular_common.js?v=ff082f09", a page reload is going to ask for it.
+    at throwOutdatedRequest (file:///C:/Dev/Desarrollo%20de%20Aplicaciones%20para%20Internet/frontend-app/node_modules/vite/dist/node/chunks/config.js:8975:32)
+    at LoadPluginContext.load (file:///C:/Dev/Desarrollo%20de%20Aplicaciones%20para%20Internet/frontend-app/node_modules/vite/dist/node/chunks/config.js:8946:118)
+    at EnvironmentPluginContainer.load (file:///C:/Dev/Desarrollo%20de%20Aplicaciones%20para%20Internet/frontend-app/node_modules/vite/dist/node/chunks/config.js:28839:56)
+    at loadAndTransform (file:///C:/Dev/Desarrollo%20de%20Aplicaciones%20para%20Internet/frontend-app/node_modules/vite/dist/node/chunks/config.js:22704:43)
+    at doTransform (file:///C:/Dev/Desarrollo%20de%20Aplicaciones%20para%20Internet/frontend-app/node_modules/vite/dist/node/chunks/config.js:22673:17)
+    at async fetchModule (file:///C:/Dev/Desarrollo%20de%20Aplicaciones%20para%20Internet/frontend-app/node_modules/vite/dist/node/chunks/config.js:34073:15)
+    at async handleInvoke (file:///C:/Dev/Desarrollo%20de%20Aplicaciones%20para%20Internet/frontend-app/node_modules/vite/dist/node/chunks/config.js:25913:21)
+    at async EventEmitter.listenerForInvokeHandler (file:///C:/Dev/Desarrollo%20de%20Aplicaciones%20para%20Internet/frontend-app/node_modules/vite/dist/node/chunks/config.js:25968:13) {
+  code: 'ERR_OUTDATED_OPTIMIZED_DEP',
+  runnerError: Error: RunnerError
+      at reviveInvokeError (file:///C:/Dev/Desarrollo%20de%20Aplicaciones%20para%20Internet/frontend-app/node_modules/vite/dist/node/module-runner.js:476:64)
+      at Object.invoke (file:///C:/Dev/Desarrollo%20de%20Aplicaciones%20para%20Internet/frontend-app/node_modules/vite/dist/node/module-runner.js:549:11)
+      at async SSRCompatModuleRunner.getModuleInformation (file:///C:/Dev/Desarrollo%20de%20Aplicaciones%20para%20Internet/frontend-app/node_modules/vite/dist/node/module-runner.js:1086:7)
+      at async request (file:///C:/Dev/Desarrollo%20de%20Aplicaciones%20para%20Internet/frontend-app/node_modules/vite/dist/node/module-runner.js:1103:83)
+      at async eval (eval at runInlinedModule (file:///C:/Dev/Desarrollo%20de%20Aplicaciones%20para%20Internet/frontend-app/node_modules/vite/dist/node/module-runner.js:913:9), <anonymous>:9:31)
+      at async ESModulesEvaluator.runInlinedModule (file:///C:/Dev/Desarrollo%20de%20Aplicaciones%20para%20Internet/frontend-app/node_modules/vite/dist/node/module-runner.js:913:3)
+      at async SSRCompatModuleRunner.directRequest (file:///C:/Dev/Desarrollo%20de%20Aplicaciones%20para%20Internet/frontend-app/node_modules/vite/dist/node/module-runner.js:1146:59)
+      at async SSRCompatModuleRunner.directRequest (file:///C:/Dev/Desarrollo%20de%20Aplicaciones%20para%20Internet/frontend-app/node_modules/vite/dist/node/chunks/config.js:15184:22)
+      at async SSRCompatModuleRunner.cachedRequest (file:///C:/Dev/Desarrollo%20de%20Aplicaciones%20para%20Internet/frontend-app/node_modules/vite/dist/node/module-runner.js:1053:73)
+      at async eval (eval at runInlinedModule (file:///C:/Dev/Desarrollo%20de%20Aplicaciones%20para%20Internet/frontend-app/node_modules/vite/dist/node/module-runner.js:913:9), <anonymous>:3328:24)
+}

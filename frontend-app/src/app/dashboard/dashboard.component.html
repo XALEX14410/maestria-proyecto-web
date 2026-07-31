@@ -1,4 +1,4 @@
-<mat-sidenav-container class="workspace-container" [hasBackdrop]="isHandset()" (backdropClick)="closeSidebar()">
+<mat-sidenav-container class="workspace-container" [hasBackdrop]="isHandset()" (backdropClick)="closeSidebar()" autosize>
   <mat-sidenav [mode]="isHandset() ? 'over' : 'side'" [opened]="!isHandset() || isSidebarExpanded()" [disableClose]="!isHandset()" class="sidebar" [class.collapsed]="!isSidebarExpanded() && !isHandset()" (closedStart)="onSidebarClosed()">
     <div class="sidebar-header">
       <mat-icon class="logo-icon">rocket_launch</mat-icon>

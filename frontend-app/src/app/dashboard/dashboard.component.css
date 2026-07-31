@@ -25,7 +25,10 @@
   transition: width var(--clay-transition-bounce);
 }
 
-.sidebar.collapsed { width: 76px; }
+.sidebar.collapsed { 
+  width: 76px !important; 
+  min-width: 76px !important;
+}
 
 .sidebar-header, .workspace-switcher, .topbar, .widget-header, .section-header, .kanban-column header, .calendar-toolbar, .gantt-scale { display: flex; align-items: center; gap: 12px; }
 
@@ -53,7 +56,14 @@
 .workspace-switcher strong, .workspace-switcher span { display: block; }
 .workspace-switcher span, .soon-chip, .status-chip, .priority-chip, .label-chip, .task-id { font-size: .74rem; }
 
-.sidebar.collapsed .logo-text, .sidebar.collapsed .workspace-switcher div, .sidebar.collapsed span[matListItemTitle], .sidebar.collapsed .soon-chip { display: none; }
+.sidebar.collapsed .logo-text, 
+.sidebar.collapsed .workspace-switcher div, 
+::ng-deep .sidebar.collapsed span[matListItemTitle], 
+::ng-deep .sidebar.collapsed .mdc-list-item__primary-text,
+::ng-deep .sidebar.collapsed .mat-mdc-list-item-title,
+.sidebar.collapsed .soon-chip { 
+  display: none !important; 
+}
 
 .sidebar.collapsed .sidebar-header, .workspace-switcher.compact {
   justify-content: center;
@@ -74,6 +84,14 @@
   border-radius: var(--clay-radius-md);
   color: var(--clay-text);
   transition: transform var(--clay-transition-fast), background var(--clay-transition-fast);
+  display: flex;
+  align-items: center;
+}
+
+.sidebar.collapsed .sidebar-nav a, .sidebar.collapsed .sidebar-nav-bottom a {
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .sidebar-nav a:hover, .sidebar-nav-bottom a:hover {

@@ -75,12 +75,14 @@ mat-sidenav-container,
 mat-drawer-container {
   height: 100dvh;
   width: 100%;
+  max-width: 100%;
   min-height: 0;
 }
 
 mat-sidenav-content,
 mat-drawer-content {
   min-width: 0;
+  max-width: 100%;
   min-height: 0;
 }
 
@@ -92,7 +94,7 @@ mat-drawer-content {
   min-width: 0;
   min-height: 0;
   height: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
   overflow-y: auto;
 }
 
@@ -101,11 +103,16 @@ mat-drawer-content {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 18px;
+  width: 100%;
+  min-width: 0;
 }
 
 .summary-grid > article,
 .quick-panels > article {
   grid-column: span 4;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 @media (max-width: 860px) {

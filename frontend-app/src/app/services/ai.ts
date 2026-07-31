@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface AiConsultaResponse {
   respuesta: string;
@@ -10,7 +11,7 @@ export interface AiConsultaResponse {
   providedIn: 'root'
 })
 export class AiService {
-  private readonly apiUrl = 'http://localhost:8080/api/v1/ia/consulta';
+  private readonly apiUrl = `${environment.apiBaseUrl}/api/v1/ia/consulta`;
 
   constructor(private readonly http: HttpClient) {}
 

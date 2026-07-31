@@ -23,6 +23,7 @@ public class HomeController {
                 "timestamp", OffsetDateTime.now().toString(),
                 "endpoints", List.of(
                         "/api/v1/status",
+                        "/api/v1/auth/login",
                         "/api/v1/tareas",
                         "/api/v1/mensajes",
                         "/api/v1/ia/consulta?pregunta=Hola",

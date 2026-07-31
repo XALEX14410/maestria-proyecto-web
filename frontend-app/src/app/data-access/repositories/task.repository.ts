@@ -9,8 +9,9 @@ import {
   TaskQuery,
   TaskStatus
 } from '../models/project-management.models';
+import { environment } from '../../../environments/environment';
 
-const API_URL = 'http://localhost:8080/api/v1/tareas';
+const API_URL = `${environment.apiBaseUrl}/api/v1/tareas`;
 const DEFAULT_QUERY: TaskQuery = {
   search: '',
   status: 'all',

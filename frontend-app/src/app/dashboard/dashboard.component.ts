@@ -1,62 +1,89 @@
-import { Component, inject, signal, OnInit, ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { CommonModule, DatePipe } from '@angular/common';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, computed, effect, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
-<<<<<<< HEAD
 import { debounceTime, distinctUntilChanged, map } from 'rxjs';
 import { PremiumDialogComponent } from '../dialogs/premium-dialog/premium-dialog.component';
 import { PermissionService } from '../core/permissions/permission.service';
-import { AuthService } from '../core/services/auth.service';
-=======
-import { HttpClient } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
->>>>>>> parent of eb0c42c (Merge pull request #8 from XALEX14410/feature/clickup-core-mvp)
 import { AiService } from '../services/ai';
-
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatListModule } from '@angular/material/list';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-
-import { PremiumDialogComponent } from '../dialogs/premium-dialog/premium-dialog.component';
 import { ThemeService } from '../theme.service';
-<<<<<<< HEAD
 import { Task, TaskPriority, TaskStatus } from '../data-access/models/project-management.models';
 import { TaskRepository } from '../data-access/repositories/task.repository';
-import { environment } from '../../environments/environment';
-=======
->>>>>>> parent of eb0c42c (Merge pull request #8 from XALEX14410/feature/clickup-core-mvp)
 
-export interface TaskItem {
-  id: string;
-  name: string;
-  status: string;
-  assignee: string;
-  priority: string;
-  sprint: string;
-  date: string;
-  labels: string[];
+interface NeonMessage {
+  remitente: string;
+  texto: string;
 }
 
-const TASK_DATA: TaskItem[] = [
-  { id: 'TH-142', name: 'Rediseño Arquitectura Cloud', status: 'En progreso', assignee: 'Alex', priority: 'Urgente', sprint: 'Sprint 42', date: 'Oct 15', labels: ['DevOps', 'Cloud'] },
-  { id: 'TH-143', name: 'Migración Base de Datos', status: 'En revisión', assignee: 'Sara', priority: 'Alta', sprint: 'Sprint 42', date: 'Oct 20', labels: ['Backend', 'DB'] },
-  { id: 'TH-144', name: 'Aplicación Móvil iOS', status: 'Backlog', assignee: 'David', priority: 'Media', sprint: 'Backlog', date: 'Nov 01', labels: ['Mobile', 'iOS'] },
-  { id: 'TH-145', name: 'Integración API ERP', status: 'Pendiente', assignee: 'Alex', priority: 'Alta', sprint: 'Sprint 42', date: 'Oct 25', labels: ['API'] },
-  { id: 'TH-146', name: 'Auditoría de Seguridad', status: 'Completada', assignee: 'Elena', priority: 'Baja', sprint: 'Sprint 40', date: 'Ago 10', labels: ['Security'] },
-  { id: 'TH-147', name: 'Fix bug en el login', status: 'Bloqueada', assignee: 'Sara', priority: 'Urgente', sprint: 'Sprint 42', date: 'Oct 12', labels: ['Bug', 'Frontend'] },
-  { id: 'TH-148', name: 'Diseñar nueva Landing', status: 'En progreso', assignee: 'David', priority: 'Media', sprint: 'Sprint 42', date: 'Oct 18', labels: ['Design'] },
+interface ChatMessage {
+  role: 'user' | 'ai' | 'error';
+  content: string;
+}
+
+interface NavigationItem {
+  id: DashboardView;
+  label: string;
+  icon: string;
+  comingSoon?: boolean;
+}
+
+type DashboardView =
+  | 'inicio'
+  | 'mi-trabajo'
+  | 'agenda'
+  | 'espacios'
+  | 'equipos'
+  | 'proyectos'
+  | 'tareas'
+  | 'notificaciones'
+  | 'configuracion'
+  | 'documentos'
+  | 'paneles'
+  | 'sprints'
+  | 'equipo'
+  | 'reportes';
+
+const STATUS_COLUMNS: { id: TaskStatus; label: string }[] = [
+  { id: 'backlog', label: 'Backlog' },
+  { id: 'todo', label: 'Pendiente' },
+  { id: 'in_progress', label: 'En progreso' },
+  { id: 'review', label: 'En revision' },
+  { id: 'blocked', label: 'Bloqueada' },
+  { id: 'done', label: 'Completada' }
+];
+
+const NAVIGATION: NavigationItem[] = [
+  { id: 'inicio', label: 'Inicio', icon: 'home' },
+  { id: 'mi-trabajo', label: 'Mi trabajo', icon: 'assignment_ind' },
+  { id: 'agenda', label: 'Agenda', icon: 'event' },
+  { id: 'espacios', label: 'Espacios', icon: 'folder_copy' },
+  { id: 'equipos', label: 'Equipos', icon: 'group' },
+  { id: 'proyectos', label: 'Proyectos', icon: 'work' },
+  { id: 'documentos', label: 'Documentos', icon: 'description', comingSoon: true },
+  { id: 'paneles', label: 'Paneles', icon: 'dashboard', comingSoon: true }
 ];
 
 @Component({
@@ -64,6 +91,9 @@ const TASK_DATA: TaskItem[] = [
   standalone: true,
   imports: [
     CommonModule,
+    DragDropModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatToolbarModule,
     MatSidenavModule,
     MatCardModule,
@@ -78,15 +108,16 @@ const TASK_DATA: TaskItem[] = [
     MatBadgeModule,
     MatListModule,
     MatProgressBarModule,
-    FormsModule,
     MatInputModule,
-    MatProgressSpinnerModule
+    MatFormFieldModule,
+    MatProgressSpinnerModule,
+    MatSelectModule,
+    MatTabsModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
-<<<<<<< HEAD
+export class DashboardComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
   private readonly http = inject(HttpClient);
@@ -96,50 +127,93 @@ export class DashboardComponent implements OnInit {
   readonly themeService = inject(ThemeService);
   readonly taskRepository = inject(TaskRepository);
   readonly permissions = inject(PermissionService);
-  private readonly authService = inject(AuthService);
-=======
-  private router = inject(Router);
-  private dialog = inject(MatDialog);
-  public themeService = inject(ThemeService);
-  private http = inject(HttpClient);
->>>>>>> parent of eb0c42c (Merge pull request #8 from XALEX14410/feature/clickup-core-mvp)
 
-  isSidebarExpanded = signal(true);
-  currentView = signal<string>('inicio');
-  mensajes = signal<any[]>([]);
+  readonly navigation = NAVIGATION;
+  readonly statusColumns = STATUS_COLUMNS;
+  readonly displayedColumns = ['title', 'status', 'priority', 'assignees', 'startDate', 'dueDate', 'progress', 'tags', 'actions'];
+  readonly searchControl = new FormControl('', { nonNullable: true });
+  readonly dataSource = computed(() => this.taskRepository.filteredTasks());
+  readonly isSidebarExpanded = signal(true);
+  readonly isHandset = toSignal(
+    this.breakpointObserver.observe('(max-width: 720px)').pipe(map(result => result.matches)),
+    { initialValue: false }
+  );
+  readonly currentView = signal<DashboardView>('inicio');
+  readonly activeTaskView = signal<'list' | 'kanban' | 'calendar' | 'gantt'>('list');
+  readonly calendarCursor = signal(new Date(2026, 6, 1));
+  readonly mensajes = signal<NeonMessage[]>([]);
 
-  textoUsuario: string = '';
-  historialChat: { role: 'user' | 'ai' | 'error', content: string }[] = [];
-  cargando: boolean = false;
-  isChatOpen: boolean = false;
+  textoUsuario = '';
+  historialChat: ChatMessage[] = [];
+  cargando = false;
+  isChatOpen = false;
 
-  private aiService = inject(AiService);
-  private cdr = inject(ChangeDetectorRef);
+  readonly overdueTasks = computed(() => this.taskRepository.allTasks().filter(task => this.isOverdue(task)));
+  readonly monthlyDays = computed(() => this.buildCalendarMonth(this.calendarCursor()));
+  readonly connectedDropLists = computed(() => this.statusColumns.map(column => `kanban-${column.id}`));
+  readonly ganttDays = computed(() => this.buildGanttDays(this.taskRepository.filteredTasks()));
 
-  displayedColumns = ['status', 'name', 'assignee', 'priority', 'sprint', 'date', 'labels'];
-  dataSource = signal<TaskItem[]>(TASK_DATA);
-
-  ngOnInit() {
-    this.http.get<any[]>('http://localhost:8080/api/v1/mensajes')
-      .subscribe({
-        next: (data) => this.mensajes.set(data),
-        error: (err) => console.error('Error fetching messages', err)
-      });
+  constructor() {
+    effect(() => {
+      if (this.isHandset()) {
+        this.isSidebarExpanded.set(false);
+      }
+    });
   }
 
-  toggleSidebar() {
-    this.isSidebarExpanded.set(!this.isSidebarExpanded());
+  ngOnInit(): void {
+    this.taskRepository.loadTasks();
+    this.loadMessages();
+
+    this.searchControl.valueChanges.pipe(
+      debounceTime(250),
+      distinctUntilChanged()
+    ).subscribe(search => this.taskRepository.updateQuery({ search }));
   }
 
-  toggleTheme() {
+  ngOnDestroy(): void {
+    this.dialog.closeAll();
+    this.isSidebarExpanded.set(false);
+  }
+
+  toggleSidebar(): void {
+    this.isSidebarExpanded.update(value => !value);
+  }
+
+  closeSidebar(): void {
+    if (this.isHandset()) {
+      this.isSidebarExpanded.set(false);
+    }
+  }
+
+  onSidebarClosed(): void {
+    if (this.isHandset()) {
+      this.isSidebarExpanded.set(false);
+    }
+  }
+
+  toggleTheme(): void {
     this.themeService.toggleTheme();
   }
 
-  changeView(view: string) {
+  changeView(view: DashboardView): void {
     this.currentView.set(view);
+    if (view === 'tareas' || view === 'proyectos') {
+      this.activeTaskView.set('list');
+    }
+    if (this.isHandset()) {
+      this.isSidebarExpanded.set(false);
+    }
+  }
+
+  setTaskView(view: 'list' | 'kanban' | 'calendar' | 'gantt'): void {
+    this.currentView.set('tareas');
+    this.activeTaskView.set(view);
   }
 
   logout(): void {
+    this.closeSidebar();
+
     const dialogRef = this.dialog.open(PremiumDialogComponent, {
       width: '1100px',
       maxWidth: '95vw',
@@ -149,34 +223,34 @@ export class DashboardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'logout') {
-        this.authService.logout();
+        this.router.navigate(['/login']);
       }
     });
   }
 
-  toggleChat() {
+  toggleChat(): void {
     this.isChatOpen = !this.isChatOpen;
   }
 
-  enviarPregunta() {
-    if(!this.textoUsuario.trim()) {
-      return; 
+  enviarPregunta(): void {
+    if (!this.textoUsuario.trim()) {
+      return;
     }
+
     const pregunta = this.textoUsuario.trim();
     this.historialChat.push({ role: 'user', content: pregunta });
-    this.textoUsuario = ''; 
-    this.cargando = true; 
+    this.textoUsuario = '';
+    this.cargando = true;
 
     this.aiService.consultarInteligenciaArtificial(pregunta).subscribe({
-      next: (res) => {
+      next: res => {
         this.historialChat.push({ role: 'ai', content: res.respuesta });
         this.cargando = false;
-        this.cdr.detectChanges(); 
+        this.cdr.detectChanges();
         this.scrollToBottom();
       },
-      error: (err) => {
-        console.error('Error al consultar la IA:', err);
-        this.historialChat.push({ role: 'error', content: 'Ocurrió un error al procesar tu solicitud con el cerebro.' });
+      error: () => {
+        this.historialChat.push({ role: 'error', content: 'Ocurrio un error al procesar tu solicitud con IA.' });
         this.cargando = false;
         this.cdr.detectChanges();
         this.scrollToBottom();
@@ -184,7 +258,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  scrollToBottom() {
+  scrollToBottom(): void {
     setTimeout(() => {
       const container = document.querySelector('.ai-chat-scroll-area');
       if (container) {
@@ -192,7 +266,6 @@ export class DashboardComponent implements OnInit {
       }
     }, 50);
   }
-<<<<<<< HEAD
 
   taskByStatus(status: TaskStatus): Task[] {
     return this.taskRepository.filteredTasks().filter(task => task.status === status);
@@ -268,7 +341,7 @@ export class DashboardComponent implements OnInit {
   }
 
   private loadMessages(): void {
-    this.http.get<NeonMessage[]>(`${environment.apiBaseUrl}/api/v1/mensajes`).subscribe({
+    this.http.get<NeonMessage[]>('http://localhost:8080/api/v1/mensajes').subscribe({
       next: data => this.mensajes.set(data),
       error: () => this.mensajes.set([])
     });
@@ -317,6 +390,4 @@ export class DashboardComponent implements OnInit {
   private toDateKey(date: Date): string {
     return date.toISOString().slice(0, 10);
   }
-=======
->>>>>>> parent of eb0c42c (Merge pull request #8 from XALEX14410/feature/clickup-core-mvp)
 }

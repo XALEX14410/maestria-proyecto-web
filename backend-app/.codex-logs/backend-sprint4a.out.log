@@ -341,3 +341,27 @@ Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
 2026-07-30T22:14:20.291-06:00  WARN 41412 --- [backend-app] [nio-8080-exec-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@1c93b693 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
 Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
 Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select m1_0.id,m1_0.remitente,m1_0.texto from mensajes m1_0
+Hibernate: select u1_0.id,u1_0.email,u1_0.nombre,u1_0.password from usuarios u1_0 where u1_0.email=?
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  03:53 h
+[INFO] Finished at: 2026-07-30T22:50:32-06:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:3.3.0:run (default-cli) on project backend-app: Process terminated with exit code: -1 -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException

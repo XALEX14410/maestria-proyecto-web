@@ -8,7 +8,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/mensajes")
-@CrossOrigin(origins = "http://localhost:4200") // Permite al frontend acceder
 public class SaludoController {
 
     private final MensajeRepository repository;
@@ -20,11 +19,11 @@ public class SaludoController {
 
     @GetMapping
     public List<Mensaje> listarMensajes() {
-        return repository.findAll(); // Hace un SELECT * FROM mensajes
+        return repository.findAll();
     }
 
     @PostMapping
     public Mensaje guardarMensaje(@RequestBody Mensaje nuevoMensaje) {
-        return repository.save(nuevoMensaje); // Hace un INSERT INTO mensajes
+        return repository.save(nuevoMensaje);
     }
 }

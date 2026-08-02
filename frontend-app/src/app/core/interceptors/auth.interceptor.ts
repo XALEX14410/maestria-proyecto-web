@@ -1,12 +1,13 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 
-import { environment } from '../../../environments/environment';
+import { RuntimeConfigService } from '../config/runtime-config.service';
 import { AuthService } from '../services/auth.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
-  const isBackendRequest = req.url.startsWith(environment.apiBaseUrl) || req.url.startsWith('/api/');
+  const runtimeConfig = inject(RuntimeConfigService);
+  const isBackendRequest = req.url.startsWith(runtimeConfig.apiBaseUrl) || req.url.startsWith('/api/');
   const isLoginRequest = req.url.includes('/api/v1/auth/login');
   const token = isBackendRequest && !isLoginRequest ? authService.getToken() : null;
 

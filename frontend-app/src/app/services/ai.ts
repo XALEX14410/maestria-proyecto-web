@@ -1,15 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { RuntimeConfigService } from '../core/config/runtime-config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AiService {
-  private readonly apiUrl = `${environment.apiBaseUrl}/api/v1/ia/consulta`;
-  
-  constructor(private http: HttpClient) {}
+  private readonly apiUrl: string;
+
+  constructor(
+    private http: HttpClient,
+    runtimeConfig: RuntimeConfigService
+  ) {
+    this.apiUrl = runtimeConfig.apiUrl('/api/v1/ia/consulta');
+  }
 
   consultarInteligenciaArtificial(pregunta: string): Observable<any> {
     // Enviamos la pregunta como parámetro de consulta (RequestParam)

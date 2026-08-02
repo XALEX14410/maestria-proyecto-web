@@ -9,9 +9,8 @@ import {
   TaskQuery,
   TaskStatus
 } from '../models/project-management.models';
-import { environment } from '../../../environments/environment';
+import { RuntimeConfigService } from '../../core/config/runtime-config.service';
 
-const API_URL = `${environment.apiBaseUrl}/api/v1/tareas`;
 const DEFAULT_QUERY: TaskQuery = {
   search: '',
   status: 'all',
@@ -25,6 +24,8 @@ const DEFAULT_QUERY: TaskQuery = {
 @Injectable({ providedIn: 'root' })
 export class TaskRepository {
   private readonly http = inject(HttpClient);
+  private readonly runtimeConfig = inject(RuntimeConfigService);
+  private readonly apiUrl = this.runtimeConfig.apiUrl('/api/v1/tareas');
   private readonly tasks = signal<Task[]>([]);
   private readonly query = signal<TaskQuery>(DEFAULT_QUERY);
   private readonly updatingTaskIds = signal<Set<string>>(new Set());
@@ -53,7 +54,7 @@ export class TaskRepository {
     this.loading.set(true);
     this.error.set(null);
 
-    this.http.get<ApiTaskDto[]>(API_URL).pipe(
+    this.http.get<ApiTaskDto[]>(this.apiUrl).pipe(
       map(items => items.map((item, index) => this.toDomainTask(item, index))),
       catchError((error: HttpErrorResponse) => {
         this.error.set(`No se pudieron cargar las tareas (${error.status || 'sin respuesta'}).`);
@@ -112,7 +113,7 @@ export class TaskRepository {
       prioridad: task ? this.priorityLabel(task.priority) : 'Media'
     };
 
-    return this.http.post(API_URL, payload).pipe(delay(200));
+    return this.http.post(this.apiUrl, payload).pipe(delay(200));
   }
 
   private setUpdating(taskId: string, updating: boolean): void {

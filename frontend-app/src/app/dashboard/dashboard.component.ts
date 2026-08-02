@@ -27,6 +27,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs';
 import { PremiumDialogComponent } from '../dialogs/premium-dialog/premium-dialog.component';
+import { RuntimeConfigService } from '../core/config/runtime-config.service';
 import { PermissionService } from '../core/permissions/permission.service';
 import { AiService } from '../services/ai';
 import { ThemeService } from '../theme.service';
@@ -122,6 +123,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private readonly dialog = inject(MatDialog);
   private readonly http = inject(HttpClient);
   private readonly aiService = inject(AiService);
+  private readonly runtimeConfig = inject(RuntimeConfigService);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly breakpointObserver = inject(BreakpointObserver);
   readonly themeService = inject(ThemeService);
@@ -341,7 +343,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   private loadMessages(): void {
-    this.http.get<NeonMessage[]>('http://localhost:8080/api/v1/mensajes').subscribe({
+    this.http.get<NeonMessage[]>(this.runtimeConfig.apiUrl('/api/v1/mensajes')).subscribe({
       next: data => this.mensajes.set(data),
       error: () => this.mensajes.set([])
     });

@@ -4,7 +4,7 @@ import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 
-import { environment } from '../../../environments/environment';
+import { RuntimeConfigService } from '../config/runtime-config.service';
 
 export const AUTH_TOKEN_KEY = 'auth_token';
 
@@ -26,7 +26,8 @@ export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly router = inject(Router);
-  private readonly loginUrl = `${environment.apiBaseUrl}/api/v1/auth/login`;
+  private readonly runtimeConfig = inject(RuntimeConfigService);
+  private readonly loginUrl = this.runtimeConfig.apiUrl('/api/v1/auth/login');
 
   login(credentials: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(this.loginUrl, credentials).pipe(

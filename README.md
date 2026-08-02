@@ -18,14 +18,42 @@ El desarrollo se encuentra integrando funcionalidades avanzadas de Inteligencia 
 * **Base de Datos:** PostgreSQL
 * **Inteligencia Artificial:** Spring AI + Groq API (LLMs)
 
-## Autenticacion JWT - Sesion 7
+## Entrega Sprint 4
 
-La practica implementa un login JWT con usuario simulado para desarrollo:
+La entrega final queda orientada a una arquitectura desacoplada en produccion:
 
-* **Correo:** admin@univo.edu.mx
-* **Contrasena:** 12345
-* **Rol:** ADMIN
+* **Frontend:** Angular publicado en Vercel como SPA.
+* **Backend:** Spring Boot publicado en Railway o Render con HTTPS.
+* **Base de datos:** PostgreSQL remoto, por ejemplo Neon.
+* **IA:** Spring AI consumiendo Groq mediante `GROQ_API_KEY`.
 
-El endpoint `POST /api/v1/auth/login` valida estas credenciales simuladas y devuelve un token JWT firmado con HS256. La llave se configura con `JWT_SECRET` o con el valor local de desarrollo definido en `backend-app/src/main/resources/application.properties`; no se deben guardar secretos reales en el repositorio.
+El backend consume el schema base de TaskHive usado como referencia en `project-base-taskhive`: `projects`, `tasks`, `task_assignments`, `task_updates` y `users_app`. Sobre esa misma base se agrega la tabla `usuarios` para autenticar el login con credenciales almacenadas en la nube.
 
-El guard de Angular protege la navegacion hacia `/dashboard`, pero no representa seguridad real del backend. Una siguiente iteracion debe integrar Spring Security, filtro JWT, validacion del token y proteccion de endpoints REST.
+### Variables de entorno
+
+Backend:
+
+* `DB_URL`
+* `DB_USERNAME`
+* `DB_PASSWORD`
+* `JWT_SECRET`
+* `GROQ_API_KEY`
+* `APP_CORS_ALLOWED_ORIGINS`
+* `APP_DEMO_USER_ENABLED`
+* `APP_DEMO_USER_EMAIL`
+* `APP_DEMO_USER_PASSWORD`
+
+Frontend:
+
+* `NG_APP_API_BASE_URL`
+
+Los archivos `.env.example` de `backend-app` y `frontend-app` muestran el formato esperado sin guardar secretos reales.
+
+### Validaciones clave
+
+* `frontend-app/vercel.json` incluye rewrite a `index.html` para evitar 404 al recargar subrutas.
+* Angular lee `src/assets/runtime-config.json`, generado durante el build, para consumir el backend HTTPS configurado.
+* `POST /api/v1/auth/login` valida el usuario contra la tabla `usuarios` y emite JWT solo si las credenciales existen en la base de datos remota.
+* `GET /api/v1/tareas` lee tareas reales desde `tasks`, responsables desde `users_app` y asignaciones desde `task_assignments`.
+* CORS se controla con `APP_CORS_ALLOWED_ORIGINS`; en produccion debe incluir la URL final de Vercel.
+* El modulo IA llama a `/api/v1/ia/consulta`, carga el contexto de tareas desde la base y muestra estado de carga mientras espera la respuesta.

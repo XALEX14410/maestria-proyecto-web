@@ -3,7 +3,6 @@ import { provideRouter } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 import { routes } from './app.routes';
-import { provideClientHydration } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { RuntimeConfigService } from './core/config/runtime-config.service';
@@ -13,7 +12,6 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes), 
     provideAppInitializer(() => inject(RuntimeConfigService).load()),
-    provideClientHydration(),
     provideAnimationsAsync(),
     provideHttpClient(withInterceptors([authInterceptor]))
   ]

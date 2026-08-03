@@ -3,7 +3,7 @@ import { dirname, resolve } from 'node:path';
 
 const apiBaseUrl = process.env.NG_APP_API_BASE_URL
   ?? process.env.API_BASE_URL
-  ?? (process.env.VERCEL ? '' : 'http://localhost:8080');
+  ?? (process.env.VERCEL ? '' : 'http://127.0.0.1:8080');
 
 if (!apiBaseUrl) {
   console.error('Set NG_APP_API_BASE_URL to the public HTTPS backend URL before building for Vercel.');

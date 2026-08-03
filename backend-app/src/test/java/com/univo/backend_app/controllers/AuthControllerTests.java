@@ -5,10 +5,12 @@ import com.univo.backend_app.config.WebConfig;
 import com.univo.backend_app.models.Usuario;
 import com.univo.backend_app.repositories.UsuarioRepository;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.TestPropertySource;
@@ -28,6 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(AuthController.class)
 @Import({JwtService.class, WebConfig.class})
+@AutoConfigureMockMvc(addFilters = false)
 @TestPropertySource(properties = {
         "app.jwt.expiration-ms=86400000",
         "app.cors.allowed-origins=http://localhost:4200,https://taskhive.vercel.app"
@@ -43,15 +46,19 @@ class AuthControllerTests {
     @MockBean
     private UsuarioRepository usuarioRepository;
 
+    @MockBean
+    private PasswordEncoder passwordEncoder;
+
     @DynamicPropertySource
     static void jwtProperties(DynamicPropertyRegistry registry) {
-        registry.add("app.jwt.secret", () -> UUID.randomUUID().toString() + UUID.randomUUID());
+        registry.add("jwt.secret", () -> UUID.randomUUID().toString() + UUID.randomUUID());
     }
 
     @Test
     void loginWithValidCredentialsReturnsJwt() throws Exception {
         when(usuarioRepository.findByEmail(TEST_EMAIL))
-                .thenReturn(Optional.of(new Usuario("Test User", TEST_EMAIL, TEST_PASSWORD)));
+                .thenReturn(Optional.of(new Usuario("Test User", TEST_EMAIL, "$2a$10$hashed-password")));
+        when(passwordEncoder.matches(TEST_PASSWORD, "$2a$10$hashed-password")).thenReturn(true);
 
         mockMvc.perform(post("/api/v1/auth/login")
                         .contentType("application/json")
@@ -65,7 +72,8 @@ class AuthControllerTests {
     @Test
     void loginWithInvalidCredentialsReturnsUnauthorized() throws Exception {
         when(usuarioRepository.findByEmail(TEST_EMAIL))
-                .thenReturn(Optional.of(new Usuario("Test User", TEST_EMAIL, TEST_PASSWORD)));
+                .thenReturn(Optional.of(new Usuario("Test User", TEST_EMAIL, "$2a$10$hashed-password")));
+        when(passwordEncoder.matches(TEST_PASSWORD + "-invalid", "$2a$10$hashed-password")).thenReturn(false);
 
         mockMvc.perform(post("/api/v1/auth/login")
                         .contentType("application/json")

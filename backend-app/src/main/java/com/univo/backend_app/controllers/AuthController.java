@@ -7,6 +7,7 @@ import com.univo.backend_app.repositories.UsuarioRepository;
 import com.univo.backend_app.services.JwtService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,10 +21,12 @@ public class AuthController {
 
     private final JwtService jwtService;
     private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthController(JwtService jwtService, UsuarioRepository usuarioRepository) {
+    public AuthController(JwtService jwtService, UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         this.jwtService = jwtService;
         this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/login")
@@ -45,7 +48,7 @@ public class AuthController {
 
         String email = request.getEmail().trim().toLowerCase();
         return usuarioRepository.findByEmail(email)
-                .filter(usuario -> usuario.getPassword().equals(request.getPassword()))
+                .filter(usuario -> passwordEncoder.matches(request.getPassword(), usuario.getPassword()))
                 .isPresent();
     }
 }

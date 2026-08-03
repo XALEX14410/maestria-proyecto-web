@@ -49,11 +49,28 @@ Frontend:
 
 Los archivos `.env.example` de `backend-app` y `frontend-app` muestran el formato esperado sin guardar secretos reales.
 
+En Railway el backend arranca con perfil `prod`, por lo que `JWT_SECRET` es obligatorio y `spring.jpa.hibernate.ddl-auto=validate`. Para desarrollo local se puede usar el perfil `local`, que incluye una clave JWT de desarrollo de mas de 32 caracteres:
+
+```bash
+cd backend-app
+./mvnw spring-boot:run -Dspring-boot.run.profiles=local
+```
+
+Antes del primer arranque en produccion, ejecutar en Neon el script idempotente:
+
+```text
+backend-app/src/main/resources/db/neon-schema.sql
+```
+
+Ese script crea las tablas esperadas sin borrar datos. El usuario demo se crea de forma idempotente desde la aplicacion cuando `APP_DEMO_USER_ENABLED=true`; la contrasena se almacena con BCrypt.
+
 ### Validaciones clave
 
 * `frontend-app/vercel.json` incluye rewrite a `index.html` para evitar 404 al recargar subrutas.
 * Angular lee `src/assets/runtime-config.json`, generado durante el build, para consumir el backend HTTPS configurado.
 * `POST /api/v1/auth/login` valida el usuario contra la tabla `usuarios` y emite JWT solo si las credenciales existen en la base de datos remota.
+* Las contrasenas de `usuarios` se comparan con BCrypt; no se guardan contrasenas en texto plano desde la aplicacion.
 * `GET /api/v1/tareas` lee tareas reales desde `tasks`, responsables desde `users_app` y asignaciones desde `task_assignments`.
+* `GET /api/v1/status` es publico; los demas endpoints `/api/**` requieren `Authorization: Bearer <token>`.
 * CORS se controla con `APP_CORS_ALLOWED_ORIGINS`; en produccion debe incluir la URL final de Vercel.
 * El modulo IA llama a `/api/v1/ia/consulta`, carga el contexto de tareas desde la base y muestra estado de carga mientras espera la respuesta.

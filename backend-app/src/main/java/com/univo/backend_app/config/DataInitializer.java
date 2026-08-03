@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class DataInitializer {
     @Bean
     CommandLineRunner seedDemoUser(
             UsuarioRepository usuarioRepository,
+            PasswordEncoder passwordEncoder,
             @Value("${app.demo-user.enabled}") boolean demoUserEnabled,
             @Value("${app.demo-user.name}") String demoUserName,
             @Value("${app.demo-user.email}") String demoUserEmail,
@@ -28,7 +30,7 @@ public class DataInitializer {
 
             String email = demoUserEmail.trim().toLowerCase();
             if (!usuarioRepository.existsByEmail(email)) {
-                usuarioRepository.save(new Usuario(demoUserName, email, demoUserPassword));
+                usuarioRepository.save(new Usuario(demoUserName, email, passwordEncoder.encode(demoUserPassword)));
             }
         };
     }

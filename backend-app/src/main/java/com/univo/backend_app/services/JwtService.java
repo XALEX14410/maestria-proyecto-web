@@ -20,11 +20,11 @@ public class JwtService {
     private final long expirationMs;
 
     public JwtService(
-            @Value("${jwt.secret}") String jwtSecret,
+            @Value("${app.jwt.secret}") String jwtSecret,
             @Value("${app.jwt.expiration-ms}") long expirationMs
     ) {
         if (jwtSecret == null || jwtSecret.getBytes(StandardCharsets.UTF_8).length < 32) {
-            throw new IllegalArgumentException("JWT_SECRET must contain at least 32 ASCII characters for HS256.");
+            throw new IllegalArgumentException("app.jwt.secret must contain at least 32 UTF-8 bytes for HS256.");
         }
 
         this.signingKey = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));

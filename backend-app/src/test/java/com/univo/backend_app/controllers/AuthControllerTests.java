@@ -51,7 +51,7 @@ class AuthControllerTests {
 
     @DynamicPropertySource
     static void jwtProperties(DynamicPropertyRegistry registry) {
-        registry.add("jwt.secret", () -> UUID.randomUUID().toString() + UUID.randomUUID());
+        registry.add("app.jwt.secret", () -> UUID.randomUUID().toString() + UUID.randomUUID());
     }
 
     @Test

@@ -1,5 +1,6 @@
 HELP.md
 target/
+*.log
 !**/src/main/**/target/
 !**/src/test/**/target/
 

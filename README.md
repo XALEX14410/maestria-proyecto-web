@@ -35,8 +35,10 @@ Backend:
 
 * `DB_URL`
 * `DB_USERNAME`
+* `DB_USER` (alias compatible con la guia de Railway)
 * `DB_PASSWORD`
 * `JWT_SECRET`
+* `JWT_SECRET_KEY` (alias compatible con la guia de Railway)
 * `GROQ_API_KEY`
 * `APP_CORS_ALLOWED_ORIGINS`
 * `APP_DEMO_USER_ENABLED`
@@ -46,11 +48,11 @@ Backend:
 
 Frontend:
 
-* `NG_APP_API_BASE_URL`
+* `NG_APP_API_BASE_URL` con la URL HTTPS publica del backend en Railway, sin barra final.
 
 Los archivos `.env.example` de `backend-app` y `frontend-app` muestran el formato esperado sin guardar secretos reales.
 
-En Railway el backend arranca con perfil `prod`, por lo que `JWT_SECRET` es obligatorio y `spring.jpa.hibernate.ddl-auto=validate`. Para desarrollo local se puede usar el perfil `local`, que incluye una clave JWT de desarrollo de mas de 32 caracteres:
+En Railway el backend arranca con perfil `prod`, por lo que `JWT_SECRET` o `JWT_SECRET_KEY` es obligatorio y `spring.jpa.hibernate.ddl-auto=validate`. Para desarrollo local se puede usar el perfil `local`, que incluye una clave JWT de desarrollo de mas de 32 caracteres:
 
 ```bash
 cd backend-app

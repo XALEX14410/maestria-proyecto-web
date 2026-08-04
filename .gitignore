@@ -1,0 +1,11 @@
+.env
+*.class
+target/
+node_modules/
+dist/
+
+backend-app/.env
+backend-app/target/
+frontend-app/.env
+frontend-app/dist/
+frontend-app/node_modules/

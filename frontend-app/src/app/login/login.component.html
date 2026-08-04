@@ -2,45 +2,65 @@
   <button mat-icon-button (click)="themeService.toggleTheme()" class="theme-toggle-btn" matTooltip="Cambiar tema">
     <mat-icon>{{ themeService.isDarkMode() ? 'light_mode' : 'dark_mode' }}</mat-icon>
   </button>
-  <mat-card class="login-card">
-    <mat-card-header class="login-header">
-      <div class="logo-container">
-        <mat-icon class="login-logo">rocket_launch</mat-icon>
+
+  <section class="login-shell">
+    <aside class="login-brand-panel">
+      <div class="brand-mark">
+        <mat-icon>rocket_launch</mat-icon>
+        <span>TaskHive</span>
       </div>
-      <mat-card-title class="login-title">TaskHive</mat-card-title>
-      <mat-card-subtitle>Organiza. Colabora. Entrega.</mat-card-subtitle>
-    </mat-card-header>
 
-    <mat-card-content>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Usuario (Correo)</mat-label>
-          <input matInput type="email" formControlName="email" placeholder="usuario@empresa.com" autocomplete="email">
-          <mat-icon matPrefix class="input-icon">email</mat-icon>
-          @if (loginForm.get('email')?.hasError('required')) {
-            <mat-error>El usuario es requerido</mat-error>
-          }
-          @if (loginForm.get('email')?.hasError('email')) {
-            <mat-error>Ingrese un correo electronico valido</mat-error>
-          }
-        </mat-form-field>
+      <div class="brand-copy">
+        <span class="eyebrow">TaskHive Cloud</span>
+        <h1>Gestiona tareas, equipo e IA desde un solo espacio.</h1>
+        <p>Dashboard listo para conectar Angular, Spring Boot, Neon, Groq y despliegue en la nube.</p>
+      </div>
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Contrasena</mat-label>
-          <input matInput [type]="hidePassword() ? 'password' : 'text'" formControlName="password" autocomplete="current-password">
-          <mat-icon matPrefix class="input-icon">lock</mat-icon>
-          <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" type="button" matTooltip="Mostrar/Ocultar contrasena">
-            <mat-icon>{{hidePassword() ? 'visibility_off' : 'visibility'}}</mat-icon>
+      <div class="brand-highlights">
+        <span><mat-icon>verified</mat-icon> JWT seguro</span>
+        <span><mat-icon>cloud_done</mat-icon> Backend en nube</span>
+        <span><mat-icon>smart_toy</mat-icon> IA integrada</span>
+      </div>
+    </aside>
+
+    <mat-card class="login-card">
+      <mat-card-header class="login-header">
+        <mat-card-title class="login-title">Acceso a TaskHive</mat-card-title>
+        <mat-card-subtitle>Ingresa con tu cuenta para continuar</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+          <label class="field-label" for="login-email">Correo</label>
+          <mat-form-field appearance="outline" class="full-width clean-field">
+            <input id="login-email" matInput type="email" formControlName="email" placeholder="demo@taskhive.com" autocomplete="email">
+            <mat-icon matPrefix class="input-icon">email</mat-icon>
+            @if (loginForm.get('email')?.hasError('required')) {
+              <mat-error>El usuario es requerido</mat-error>
+            }
+            @if (loginForm.get('email')?.hasError('email')) {
+              <mat-error>Ingrese un correo valido</mat-error>
+            }
+          </mat-form-field>
+
+          <label class="field-label" for="login-password">Password</label>
+          <mat-form-field appearance="outline" class="full-width clean-field">
+            <input id="login-password" matInput [type]="hidePassword() ? 'password' : 'text'" formControlName="password" autocomplete="current-password">
+            <mat-icon matPrefix class="input-icon">lock</mat-icon>
+            <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" type="button" matTooltip="Mostrar/Ocultar password">
+              <mat-icon>{{hidePassword() ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            @if (loginForm.get('password')?.hasError('required')) {
+              <mat-error>El password es requerido</mat-error>
+            }
+          </mat-form-field>
+
+          <button mat-flat-button color="primary" class="submit-button" type="submit" [disabled]="loginForm.invalid || isSubmitting()">
+            <mat-icon>{{ isSubmitting() ? 'hourglass_top' : 'login' }}</mat-icon>
+            {{ isSubmitting() ? 'Ingresando...' : 'Entrar al dashboard' }}
           </button>
-          @if (loginForm.get('password')?.hasError('required')) {
-            <mat-error>La contrasena es requerida</mat-error>
-          }
-        </mat-form-field>
-
-        <button mat-flat-button color="primary" class="submit-button" type="submit" [disabled]="loginForm.invalid || isSubmitting()">
-          {{ isSubmitting() ? 'Ingresando...' : 'Ingresar al sistema' }}
-        </button>
-      </form>
-    </mat-card-content>
-  </mat-card>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </section>
 </div>

@@ -48,7 +48,21 @@ interface NavigationItem {
   id: DashboardView;
   label: string;
   icon: string;
-  comingSoon?: boolean;
+}
+
+interface TeamMemberCard {
+  name: string;
+  role: string;
+  focus: string;
+  status: 'Disponible' | 'En revisión' | 'Ocupado';
+}
+
+interface DocumentCard {
+  title: string;
+  description: string;
+  owner: string;
+  updatedAt: string;
+  icon: string;
 }
 
 type DashboardView =
@@ -71,7 +85,7 @@ const STATUS_COLUMNS: { id: TaskStatus; label: string }[] = [
   { id: 'backlog', label: 'Backlog' },
   { id: 'todo', label: 'Pendiente' },
   { id: 'in_progress', label: 'En progreso' },
-  { id: 'review', label: 'En revision' },
+  { id: 'review', label: 'En revisión' },
   { id: 'blocked', label: 'Bloqueada' },
   { id: 'done', label: 'Completada' }
 ];
@@ -83,8 +97,8 @@ const NAVIGATION: NavigationItem[] = [
   { id: 'espacios', label: 'Espacios', icon: 'folder_copy' },
   { id: 'equipos', label: 'Equipos', icon: 'group' },
   { id: 'proyectos', label: 'Proyectos', icon: 'work' },
-  { id: 'documentos', label: 'Documentos', icon: 'description', comingSoon: true },
-  { id: 'paneles', label: 'Paneles', icon: 'dashboard', comingSoon: true }
+  { id: 'documentos', label: 'Documentos', icon: 'description' },
+  { id: 'paneles', label: 'Paneles', icon: 'dashboard' }
 ];
 
 @Component({
@@ -132,6 +146,34 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   readonly navigation = NAVIGATION;
   readonly statusColumns = STATUS_COLUMNS;
+  readonly teamMembers: TeamMemberCard[] = [
+    { name: 'Alex Lara', role: 'Manager', focus: 'Coordinación del sprint y entrega', status: 'Disponible' },
+    { name: 'Equipo Backend', role: 'API', focus: 'Spring Boot, JWT, Neon y Groq', status: 'En revisión' },
+    { name: 'Equipo Frontend', role: 'UI', focus: 'Angular, Vercel y experiencia SaaS', status: 'Ocupado' }
+  ];
+  readonly documentCards: DocumentCard[] = [
+    {
+      title: 'Guía de despliegue',
+      description: 'Variables de entorno, Railway, Vercel y pasos de validación.',
+      owner: 'TaskHive Core',
+      updatedAt: '2026-08-04',
+      icon: 'rocket_launch'
+    },
+    {
+      title: 'Contrato API',
+      description: 'Endpoints principales para login, tareas, mensajes e IA.',
+      owner: 'Backend',
+      updatedAt: '2026-08-04',
+      icon: 'api'
+    },
+    {
+      title: 'Notas de sprint',
+      description: 'Riesgos, pendientes y decisiones tomadas para la entrega.',
+      owner: 'Producto',
+      updatedAt: '2026-08-04',
+      icon: 'article'
+    }
+  ];
   readonly displayedColumns = ['title', 'status', 'priority', 'assignees', 'startDate', 'dueDate', 'progress', 'tags', 'actions'];
   readonly searchControl = new FormControl('', { nonNullable: true });
   readonly dataSource = computed(() => this.taskRepository.filteredTasks());
@@ -151,6 +193,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
   isChatOpen = false;
 
   readonly overdueTasks = computed(() => this.taskRepository.allTasks().filter(task => this.isOverdue(task)));
+  readonly activeTasks = computed(() => this.taskRepository.allTasks().filter(task => task.status !== 'done'));
+  readonly completedTasks = computed(() => this.taskRepository.allTasks().filter(task => task.status === 'done'));
+  readonly blockedTasks = computed(() => this.taskRepository.allTasks().filter(task => task.status === 'blocked'));
+  readonly urgentTasks = computed(() => this.taskRepository.allTasks().filter(task => task.priority === 'urgent' || task.priority === 'high'));
+  readonly upcomingTasks = computed(() => this.taskRepository.filteredTasks().slice(0, 5));
+  readonly completionRate = computed(() => {
+    const total = this.taskRepository.allTasks().length;
+    return total === 0 ? 0 : Math.round((this.completedTasks().length / total) * 100);
+  });
+  readonly hasActiveFilters = computed(() => {
+    const query = this.taskRepository.taskQuery();
+    return Boolean(query.search.trim()) || query.status !== 'all' || query.priority !== 'all';
+  });
   readonly monthlyDays = computed(() => this.buildCalendarMonth(this.calendarCursor()));
   readonly connectedDropLists = computed(() => this.statusColumns.map(column => `kanban-${column.id}`));
   readonly ganttDays = computed(() => this.buildGanttDays(this.taskRepository.filteredTasks()));
@@ -200,7 +255,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   changeView(view: DashboardView): void {
     this.currentView.set(view);
-    if (view === 'tareas' || view === 'proyectos') {
+    if (view === 'agenda') {
+      this.activeTaskView.set('calendar');
+    } else if (view === 'mi-trabajo' || view === 'tareas' || view === 'proyectos') {
       this.activeTaskView.set('list');
     }
     if (this.isHandset()) {
@@ -211,6 +268,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   setTaskView(view: 'list' | 'kanban' | 'calendar' | 'gantt'): void {
     this.currentView.set('tareas');
     this.activeTaskView.set(view);
+  }
+
+  clearTaskFilters(): void {
+    this.searchControl.setValue('');
+    this.taskRepository.updateQuery({ search: '', status: 'all', priority: 'all', sortBy: 'dueDate' });
   }
 
   logout(): void {
@@ -252,7 +314,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.scrollToBottom();
       },
       error: () => {
-        this.historialChat.push({ role: 'error', content: 'Ocurrio un error al procesar tu solicitud con IA.' });
+        this.historialChat.push({ role: 'error', content: 'Ocurrió un error al procesar tu solicitud con IA.' });
         this.cargando = false;
         this.cdr.detectChanges();
         this.scrollToBottom();

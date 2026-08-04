@@ -223,7 +223,7 @@ export class TaskRepository {
       backlog: 'Backlog',
       todo: 'Pendiente',
       in_progress: 'En progreso',
-      review: 'En revision',
+      review: 'En revisión',
       blocked: 'Bloqueada',
       done: 'Completada'
     };

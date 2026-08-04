@@ -18,7 +18,7 @@ public interface TaskRepository extends JpaRepository<TaskEntity, Integer> {
                     WHEN 'done' THEN 'Completada'
                     ELSE t.task_status
                 END AS estado,
-                COALESCE(STRING_AGG(u.full_name, ', ' ORDER BY u.full_name), 'Sin asignar') AS responsable,
+                'Sin asignar' AS responsable,
                 CASE t.priority_level
                     WHEN 'low' THEN 'Baja'
                     WHEN 'medium' THEN 'Media'
@@ -26,8 +26,6 @@ public interface TaskRepository extends JpaRepository<TaskEntity, Integer> {
                     ELSE t.priority_level
                 END AS prioridad
             FROM tasks t
-            LEFT JOIN task_assignments ta ON ta.task_id = t.task_id
-            LEFT JOIN users_app u ON u.user_id = ta.user_id
             GROUP BY t.task_id, t.task_title, t.task_status, t.priority_level, t.due_on
             ORDER BY t.due_on NULLS LAST, t.task_id
             """, nativeQuery = true)
